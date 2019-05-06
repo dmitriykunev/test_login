@@ -1,15 +1,14 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { render } from 'react-dom';
 import './index.css';
 import TestLanding from './App';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import rootReducer from './reducers/rootReducer.js'
+import store from './store/index';
 
 
 
-ReactDOM.render(
+render(
     <Provider store={store}>
     <TestLanding />
     </Provider>,

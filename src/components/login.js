@@ -1,8 +1,17 @@
 import React, {Component} from 'react';
 import '../index.css';
 import DataTransaction from "./data_transaction.js";
+import {addLogin, addPassword } from '../actions/index';
+import { connect } from 'react-redux';
 
-class Login extends Component {
+function mapDispatchToProps(dispatch) {
+    return {
+        addLogin: userName => dispatch(addLogin(userName)),
+        addPassword: passwd => dispatch(addPassword(passwd))
+    };
+}
+
+class LoginForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -34,6 +43,10 @@ class Login extends Component {
         };
         const {data} = await DataTransaction.login(user);
         console.log(data);
+        const userName = this.state.userName;
+        const passwd = this.state.passwd;
+        this.props.addLogin({userName});
+        this.props.addPassword({passwd});
         this.setState( {
             userName: data.userName,
             passwd: data.passwd,
@@ -76,5 +89,7 @@ class Login extends Component {
         );
     };
 };
+
+const Login = connect(null, mapDispatchToProps)(LoginForm);
 
 export default Login;
