@@ -24,7 +24,7 @@ class TestLanding extends Component {
     checkStateValid = async (token) => {
         if(token) {
             const {data} = await DataTransaction.token(token);
-            console.log(data);
+            // console.log(this.state);
             if(data) {
                 this.setState({
                     token: data.token,

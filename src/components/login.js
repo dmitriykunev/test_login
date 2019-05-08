@@ -1,17 +1,16 @@
 import React, {Component} from 'react';
 import '../index.css';
 import DataTransaction from "./data_transaction.js";
-import {addLogin, addPassword } from '../actions/index';
 import { connect } from 'react-redux';
 
-function mapDispatchToProps(dispatch) {
+const mapStateToProps = state => {
     return {
-        addLogin: userName => dispatch(addLogin(userName)),
-        addPassword: passwd => dispatch(addPassword(passwd))
-    };
-}
+        state: state
+    }
+};
 
-class LoginForm extends Component {
+
+class Login extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -24,12 +23,22 @@ class LoginForm extends Component {
     };
 
     handleChangeUserName = (event) => {
+        const data = event.target.value;
+        this.props.dispatch({
+           type: 'ADD_LOGIN',
+           data
+        });
         this.setState({
             userName: event.target.value
         });
     };
 
     handleChangePasswd = (event) => {
+        const data = event.target.value;
+        this.props.dispatch({
+            type: 'ADD_PASSWORD',
+            data
+        });
         this.setState({
             passwd: event.target.value
         });
@@ -42,11 +51,7 @@ class LoginForm extends Component {
             password: this.state.passwd
         };
         const {data} = await DataTransaction.login(user);
-        console.log(data);
-        const userName = this.state.userName;
-        const passwd = this.state.passwd;
-        this.props.addLogin({userName});
-        this.props.addPassword({passwd});
+        console.log(this.props);
         this.setState( {
             userName: data.userName,
             passwd: data.passwd,
@@ -90,6 +95,5 @@ class LoginForm extends Component {
     };
 };
 
-const Login = connect(null, mapDispatchToProps)(LoginForm);
 
-export default Login;
+export default connect(mapStateToProps) (Login);

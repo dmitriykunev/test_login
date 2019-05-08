@@ -100,6 +100,12 @@ function checkOutToken(data) {
         }
     });
 
+    app.get('/getUsers', function(req, res) {
+        const users = userList;
+        res.send(users);
+        res.statusCode = 200
+    });
+
     app.put('/register', jsonParser, function (req, res) {
         console.log(req.body);
         if (req.body) {

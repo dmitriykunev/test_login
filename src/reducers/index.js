@@ -6,13 +6,23 @@ const initialState = {
 };
 
 function rootReducer(state = initialState, action) {
-    if (action.type === ADD_LOGIN && action.type === ADD_PASSWORD) {
-        return Object.assign({}, state, {
-            userName: state.userName.concat(action.payload.userName),
-            password: state.password.concat(action.payload.password)
-        });
+    console.log(action);
+    switch(action.type) {
+        case ADD_LOGIN:
+            return Object.assign({}, state, {userName: state.userName.concat(action.data)});
+        case ADD_PASSWORD:
+            return Object.assign({}, state, {password: state.password.concat(action.data)});
+        default:
+            return state;
     }
-    return state;
+
+    // if (action.type === ADD_LOGIN && action.type === ADD_PASSWORD) {
+    //     return Object.assign({}, state, {
+    //         userName: state.userName.concat(action.payload.userName),
+    //         password: state.password.concat(action.payload.password)
+    //     });
+    // }
+    // return state;
 }
 
 export default rootReducer;
