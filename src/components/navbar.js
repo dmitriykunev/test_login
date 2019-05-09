@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { NavLink, Route, BrowserRouter,Switch } from "react-router-dom";
+import UsersView from './usersview.js';
+// import UsersEdit from './usersedit.js';
+// import UsersRemove from './usersremove.js';
 
 class NavBar extends Component {
     constructor(props) {
@@ -20,24 +23,25 @@ class NavBar extends Component {
 
     render () {
     return (
-        <Router>
+        <BrowserRouter>
         <div className={'navbar'}>
             <a className="active" href='/'><i className="fa fa-fw fa-home"></i> Home</a>
             <div className={'navbar-right-edge'}>
-                    <a href='/'><i className="fa fa-fw fa-user"></i> {this.state.userName}</a>
+                    <b><i className="fa fa-fw fa-user"></i> {this.state.userName}</b>
 
-                        <Link to={"/usersView"}><i className="fa fa-fw fa-user"></i> Users' List</Link>
-                        <Link to={"/usersEdit"}><i className="fa fa-fw fa-user"></i> Manage Users</Link>
-                        <Link to={"/usersRemove"}><i className="fa fa-fw fa-user"></i> Remove Users</Link>
+                        <NavLink to='/usersView'><i className="fa fa-fw fa-user"></i> Users' List</NavLink>
+                        {/*<Link to={"/usersEdit"}><i className="fa fa-fw fa-user"></i> Manage Users</Link>*/}
+                        {/*<Link to={"/usersRemove"}><i className="fa fa-fw fa-user"></i> Remove Users</Link>*/}
 
-                <a onClick={this.signOut} href='/'><i className="fas fa-sign-out-alt"></i> Sign Out</a>
+                {/*<a onClick={this.signOut} href='/'><i className="fas fa-sign-out-alt"></i> Sign Out</a>*/}
             </div>
-
-            <Route path="/usersView" exact component={'./components/usersView.js'} />
-            <Route path="/usersEdit" exact component={'./components/usersEdit.js'} />
-            <Route path="/usersRemove" exact component={'./components/usersRemove.js'} />
+            <Switch>
+            <Route path="/usersView" component={UsersView} />
+            {/*<Route path="/usersEdit" exact component={UsersEdit} />*/}
+            {/*<Route path="/usersRemove" exact component={UsersRemove} />*/}
+            </Switch>
         </div>
-        </Router>
+        </BrowserRouter>
     )
     }
 }
