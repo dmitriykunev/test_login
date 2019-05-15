@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import './index.css';
-import TestLanding from './App';
+import AppRouter from './router.js';
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux';
 import store from './store/index';
@@ -10,7 +10,7 @@ import store from './store/index';
 
 render(
     <Provider store={store}>
-    <TestLanding />
+    <AppRouter />
     </Provider>,
     document.getElementById('root'));
 

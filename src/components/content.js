@@ -1,4 +1,5 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
+import NavBar from './navbar';
 import '../index.css';
 
 class Content extends Component {
@@ -13,6 +14,7 @@ class Content extends Component {
 
     render() {
         return (
+            <Fragment><NavBar />
             <div>
                 <h1>Custom Title</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
@@ -54,7 +56,7 @@ class Content extends Component {
                     pellentesque sit amet porttitor eget dolor. Cras sed felis eget velit aliquet sagittis id
                     consectetur. Commodo nulla facilisi nullam vehicula ipsum a arcu cursus vitae. Est placerat in
                     egestas erat.</p>
-            </div>
+            </div></Fragment>
         )
     };
 }

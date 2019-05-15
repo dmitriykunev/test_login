@@ -1,49 +1,72 @@
-import React, { Component } from 'react';
-import { NavLink, Route, BrowserRouter,Switch } from "react-router-dom";
-import UsersView from './usersview.js';
-// import UsersEdit from './usersedit.js';
-// import UsersRemove from './usersremove.js';
+import React, {Component} from 'react';
+import {NavLink} from "react-router-dom";
+import Button from '@material-ui/core/Button';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 class NavBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            //userName: this.props.name
             userName: this.props.name,
-            loggedIn: this.props.loggedIn
+            loggedIn: this.props.loggedIn,
+            anchorEl: null
         };
     }
 
     signOut = () => {
         this.setState({
             loggedIn: false
-            });
+        });
         localStorage.clear();
     };
 
-    render () {
-    return (
-        <BrowserRouter>
-        <div className={'navbar'}>
-            <a className="active" href='/'><i className="fa fa-fw fa-home"></i> Home</a>
-            <div className={'navbar-right-edge'}>
-                    <b><i className="fa fa-fw fa-user"></i> {this.state.userName}</b>
+    handleClick = event => {
+        this.setState({anchorEl: event.currentTarget});
+    };
 
+    handleClose = () => {
+        this.setState({anchorEl: null});
+    };
+
+    render() {
+        const anchorEl = this.state.anchorEl;
+
+        return (
+            <div className={'menu'}>
+                <Button aria-owns={anchorEl ? 'simple-menu' : undefined}
+                        aria-haspopup="true"
+                        onClick={this.handleClick}>
+                    USER MENU
+                </Button>
+                <Menu
+                    id="simple-menu"
+                    anchorEl={anchorEl}
+                    open={Boolean(anchorEl)}
+                    onClose={this.handleClose}>
+                    <MenuItem onClick={this.handleClose}>
+                        <NavLink to='/content'><i className="fa fa-fw fa-home"></i> Home</NavLink>
+                    </MenuItem>
+                    <MenuItem onClick={this.handleClose}>
+                        <NavLink to='/usersView'><i className="fa fa-fw fa-user"></i> USER</NavLink>
+                    </MenuItem>
+                    <MenuItem onClick={this.handleClose}>
                         <NavLink to='/usersView'><i className="fa fa-fw fa-user"></i> Users' List</NavLink>
-                        {/*<Link to={"/usersEdit"}><i className="fa fa-fw fa-user"></i> Manage Users</Link>*/}
-                        {/*<Link to={"/usersRemove"}><i className="fa fa-fw fa-user"></i> Remove Users</Link>*/}
-
-                {/*<a onClick={this.signOut} href='/'><i className="fas fa-sign-out-alt"></i> Sign Out</a>*/}
+                    </MenuItem>
+                    <MenuItem onClick={this.handleClose}>
+                        <NavLink to={"/usersEdit"}><i className="fa fa-fw fa-user"></i> Manage Users</NavLink>
+                    </MenuItem>
+                    <MenuItem onClick={this.handleClose}>
+                        <NavLink to={"/usersRemove"}><i className="fa fa-fw fa-user"></i> Remove Users</NavLink>
+                    </MenuItem>
+                    <MenuItem onClick={this.handleClose}>
+                        <NavLink to='/' onClick={this.signOut}>
+                            <i className="fas fa-sign-out-alt"></i> Sign Out</NavLink>
+                    </MenuItem>
+                </Menu>
             </div>
-            <Switch>
-            <Route path="/usersView" component={UsersView} />
-            {/*<Route path="/usersEdit" exact component={UsersEdit} />*/}
-            {/*<Route path="/usersRemove" exact component={UsersRemove} />*/}
-            </Switch>
-        </div>
-        </BrowserRouter>
-    )
+    );
     }
-}
+    }
 
-export default NavBar;
+    export default NavBar;
