@@ -40,12 +40,14 @@ class SignUp extends Component {
             token: Math.random().toString(36).substr(2, 25)
         };
         const {data} = await DataTransaction.register(user);
-        console.log(data);
         this.setState( {
             userName: data.userName,
-            passwd: data.passwd
+            passwd: data.passwd,
+            token: data.token
         });
-        this.props.newState(data);
+        localStorage.setItem('userName', data.userName);
+        localStorage.setItem('token', data.token);
+        this.props.history.push('/');
     };
 
     isMatched = (event) => {

@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import '../index.css';
 import DataTransaction from "./data_transaction.js";
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 
 const mapStateToProps = state => {
     return {
@@ -51,12 +50,13 @@ class Login extends Component {
         const {data} = await DataTransaction.login(user);
         this.setState( {
             userName: data.userName,
-            passwd: data.passwd
+            passwd: data.passwd,
+            token: data.token
         });
         this.updateLocalStorage(data);
         if(this.state.token) {
-            return <Redirect to='/content' />
-        } else { return <Redirect to='/signUp' /> }
+            this.props.history.push('/content')
+        }
     };
 
     updateLocalStorage = (data) => {
@@ -66,7 +66,7 @@ class Login extends Component {
 
     handleRedirect = (event) => {
         event.preventDefault();
-        return <Redirect push to='/signUp' />
+        this.props.history.push('/signUp')
     };
 
     // handleSignUpButton = (event) => {
