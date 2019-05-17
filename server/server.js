@@ -8,12 +8,14 @@ let userList = [
         userName: 'dmitriy',
         passwd: 123456,
         token: 'otsotzlinl',
+        email: 'dmitriy@gmail.com',
         active: true
     },
     {
         userName: 'B@rt',
         passwd: 123456,
         token: '89gwrzedtyi',
+        email: 'bArt@gmail.com',
         active: true
     }
 ];
@@ -24,10 +26,8 @@ function userLookUp(name, passwd) {
     for (let i = 0; i < userList.length; i++) {
         if(userList[i].userName == name) {
             if(userList[i].passwd == passwd) {
-                if(userList[i].active == true) {
-                    return true
-                }
-                }
+                return true
+            }
             }
     } return false
 }
@@ -47,15 +47,32 @@ function checkOutToken(data) {
 
     for (let i = 0; i < userList.length; i++) {
         if (userList[i].token === token) {
-            // let user = {};
-            return {userName: userList[i].userName, token: userList[i].token, loggedIn: userList[i].active};
-        }
+            console.log('Token check out finished...');
+            return {userName: userList[i].userName, passwd: userList[i].passwd, email: userList[i].email};
+        } console.log('Token check out failed...')
     }
 
-    return false
+    return false;
+    console.log('Token check out failed...')
 }
 
-    function userRegister(name, passwd, token) {
+function modifyUser(payload) {
+    // console.log(payload);
+    // const { data } = payload;
+    for (let i = 0; i < userList.length; i++) {
+        if (userList[i].token === payload.token) {
+            const newUserList = userList.splice(i, 1, payload);
+            // userList.push(payload);
+            console.log(userList);
+            // userList = newUserList;
+            return 'Modification Done!'
+        } else { return false;
+        console.log('Modification failed...');
+        }
+    }
+}
+
+    function userRegister(name, passwd, token, email) {
         console.log('Registering started');
         if (!userLookUp(name, passwd)) {
             userList.push({
@@ -78,7 +95,7 @@ function checkOutToken(data) {
         if (req.body) {
             if (userLookUp(req.body.userName, req.body.password)) {
                 const token = findTokenByUser(req.body.userName);
-                res.send({userName: req.body.userName, passwd: req.body.password, loggedIn: true, token: token});
+                res.send({userName: req.body.userName, passwd: req.body.password, token: token});
                 console.log('Query finished')
             } else {
                 res.send({userName: req.body.userName, passwd: req.body.password, loggedIn: false})
@@ -106,14 +123,21 @@ function checkOutToken(data) {
         res.statusCode = 200
     });
 
+    app.put('/modify', jsonParser, function (req, res) {
+        console.log(req.body);
+        modifyUser(req.body);
+        res.send(userList);
+        res.statusCode = 200
+    });
+
     app.put('/register', jsonParser, function (req, res) {
         console.log(req.body);
         if (req.body) {
-            if (userRegister(req.body.userName, req.body.password, req.body.token)) {
+            if (userRegister(req.body.userName, req.body.password, req.body.token, req.body.email)) {
                 res.send({
                     userName: req.body.userName,
                     passwd: req.body.password,
-                    loggedIn: true,
+                    email: req.body.email,
                     token: req.body.token});
             }
             res.send('This user is already registered, Choose another name!');

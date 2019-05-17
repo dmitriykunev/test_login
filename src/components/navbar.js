@@ -48,16 +48,10 @@ class NavBar extends Component {
                         <NavLink to='/content'><i className="fa fa-fw fa-home"></i> Home</NavLink>
                     </MenuItem>
                     <MenuItem onClick={this.handleClose}>
-                        <NavLink to='/usersView'><i className="fa fa-fw fa-user"></i> USER</NavLink>
+                        <NavLink to='/usersView'><i className="fa fa-fw fa-address-card"></i> USER</NavLink>
                     </MenuItem>
                     <MenuItem onClick={this.handleClose}>
-                        <NavLink to='/usersView'><i className="fa fa-fw fa-user"></i> Users' List</NavLink>
-                    </MenuItem>
-                    <MenuItem onClick={this.handleClose}>
-                        <NavLink to={"/usersEdit"}><i className="fa fa-fw fa-user"></i> Manage Users</NavLink>
-                    </MenuItem>
-                    <MenuItem onClick={this.handleClose}>
-                        <NavLink to={"/usersRemove"}><i className="fa fa-fw fa-user"></i> Remove Users</NavLink>
+                        <NavLink to={"/usersEdit"}><i className="fa fa-fw fa-user-edit"></i> Manage Users</NavLink>
                     </MenuItem>
                     <MenuItem onClick={this.handleClose}>
                         <NavLink to='/' onClick={this.signOut}>

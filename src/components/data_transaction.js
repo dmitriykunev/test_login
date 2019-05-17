@@ -12,6 +12,9 @@ class DataTransaction {
    token(payload) {
        return axios.post(URL + '/token', payload);
    }
+   modify(payload) {
+       return axios.put(URL + '/modify', payload);
+   }
    getUsers() {
        return axios.get(URL + '/getUsers');
    }
