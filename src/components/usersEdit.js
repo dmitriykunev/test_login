@@ -19,20 +19,23 @@ class UsersEdit extends Component {
         };
     }
 
-    getUsersArray = async() => {
-        return await DataTransaction.getUsers;
+    componentDidMount() {
+        this.userListGenerator()
+    }
+
+    getUsersArray = async () => {
+        return await DataTransaction.getUsers();
     };
 
-    userListGenerator = () => {
-        const data = this.getUsersArray();
-        if(data) {
-        this.setState({
-            usersArray: data
-        });
-            return true }
-                else {
-                      return false
+    userListGenerator = async () => {
+        const { data } = await this.getUsersArray();
+        console.log(data)
+        if (data) {
+            this.setState({
+                usersArray: data
+            });
         }
+
     };
 
     checkStateValid = async (token) => {
@@ -53,38 +56,24 @@ class UsersEdit extends Component {
         return false
     };
 
-    handlePage = (array) => {
-        if(array) {
-            array.forEach(function(object) {
-                return object;
-            })
-        } else {
-            return (
-                <div>
-                    <p> Data is not available</p>
-                </div>
-            )
-        }
-    };
+    renderNoData = () => (
+        <div>
+            <p> Data is not available</p>
+        </div>
+    )
 
-    screenList = () => {
-            const screenData = this.state.usersArray.map(function(elem) {
-                return (
-                        <div>
-                            <UsersForm userName={elem.userName} passwd={elem.passwd} email={elem.email} />
-                        </div>
-                )
-            });
-        this.handlePage(screenData);
-    };
+    renderUser = (user) => <div key={user.token} ><UsersForm userName={user.userName} passwd={user.passwd} email={user.email}/></div>
+
 
     render() {
         const screen = this.screenList;
         return (
             <div>
-                <NavBar />
-                {console.log(screen)}
-            {/*{screen}*/}
+                <NavBar/>
+
+                {
+                    this.state.usersArray.length === 0 ? this.renderNoData() : this.state.usersArray.map(this.renderUser)
+                }
             </div>
         )
 

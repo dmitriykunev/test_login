@@ -36,7 +36,7 @@ class UsersForm extends Component {
             userName: this.props.userName,
             passwd: this.props.passwd,
             token: this.props.token,
-            email: this.props.email
+            email: this.props.email.email
         };
     }
 
@@ -69,7 +69,7 @@ render() {
 
     return (
         <div>
-            <NavBar/>
+            {/*<NavBar/>*/}
             <div>
                 <form className={classes.container} noValidate autoComplete="off">
                     <TextField
