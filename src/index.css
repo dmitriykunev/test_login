@@ -63,6 +63,25 @@ form {
     box-shadow: gray;
 }
 
+formUser {
+    right: 30%;
+    left: 30%;
+    top: 50px;
+    margin: 50px;
+    max-width: 800px;
+    padding: 16px;
+    background-color: transparent;
+    border: 1px solid dodgerblue;
+    border-radius: 10px;
+    box-shadow: gray;
+}
+
+TextField {
+    border-color: dodgerblue;
+    border-radius: 10px;
+
+}
+
 h1 {
     text-align: center;
     color: dodgerblue;
@@ -87,8 +106,8 @@ body {
     background-color: dodgerblue;
 }
 
-.menu {
-    position: absolute;
+menu {
+    position: fixed;
     right: 10px;
     top: 10px;
     margin: 10px;

@@ -4,7 +4,6 @@ import DataTransaction from "./data_transaction.js";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
-import NavBar from "./navbar";
 
 const styles = theme => ({
     container: {
@@ -36,7 +35,7 @@ class UsersForm extends Component {
             userName: this.props.userName,
             passwd: this.props.passwd,
             token: this.props.token,
-            email: this.props.email.email
+            email: this.props.email
         };
     }
 
@@ -69,9 +68,8 @@ render() {
 
     return (
         <div>
-            {/*<NavBar/>*/}
             <div>
-                <form className={classes.container} noValidate autoComplete="off">
+                <formUser className={classes.container} noValidate autoComplete="off">
                     <TextField
                         id="outlined-name"
                         label="Name"
@@ -102,7 +100,7 @@ render() {
                     <Button variant="outlined" color="primary" className={classes.button} onClick={this.handleSaveUser}>
                         Save
                     </Button>
-                </form>
+                </formUser>
             </div>
 
         </div>

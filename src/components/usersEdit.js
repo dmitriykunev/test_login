@@ -60,13 +60,12 @@ class UsersEdit extends Component {
         <div>
             <p> Data is not available</p>
         </div>
-    )
+    );
 
-    renderUser = (user) => <div key={user.token} ><UsersForm userName={user.userName} passwd={user.passwd} email={user.email}/></div>
+    renderUser = (user) => <div key={user.token} ><UsersForm userName={user.userName} passwd={user.passwd} email={user.email} token={user.token} /></div>
 
 
     render() {
-        const screen = this.screenList;
         return (
             <div>
                 <NavBar/>

@@ -15,9 +15,6 @@ class NavBar extends Component {
     }
 
     signOut = () => {
-        this.setState({
-            loggedIn: false
-        });
         localStorage.clear();
     };
 
@@ -33,8 +30,9 @@ class NavBar extends Component {
         const anchorEl = this.state.anchorEl;
 
         return (
-            <div className={'menu'}>
-                <Button aria-owns={anchorEl ? 'simple-menu' : undefined}
+            <div>
+                <Button variant="outlined" color="primary"
+                    aria-owns={anchorEl ? 'simple-menu' : undefined}
                         aria-haspopup="true"
                         onClick={this.handleClick}>
                     USER MENU
@@ -48,7 +46,7 @@ class NavBar extends Component {
                         <NavLink to='/content'><i className="fa fa-fw fa-home"></i> Home</NavLink>
                     </MenuItem>
                     <MenuItem onClick={this.handleClose}>
-                        <NavLink to='/usersView'><i className="fa fa-fw fa-address-card"></i> USER</NavLink>
+                        <NavLink to='/usersView'><i className="fa fa-fw fa-address-card"></i> My Profile</NavLink>
                     </MenuItem>
                     <MenuItem onClick={this.handleClose}>
                         <NavLink to={"/usersEdit"}><i className="fa fa-fw fa-user-edit"></i> Manage Users</NavLink>
