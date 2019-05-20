@@ -43,16 +43,16 @@ class NavBar extends Component {
                     open={Boolean(anchorEl)}
                     onClose={this.handleClose}>
                     <MenuItem onClick={this.handleClose}>
-                        <NavLink to='/content'><i className="fa fa-fw fa-home"></i> Home</NavLink>
+                        <NavLink className="NavLink" to='/content'><i className="fa fa-fw fa-home"></i> Home</NavLink>
                     </MenuItem>
                     <MenuItem onClick={this.handleClose}>
-                        <NavLink to='/usersView'><i className="fa fa-fw fa-address-card"></i> My Profile</NavLink>
+                        <NavLink className="NavLink" to='/usersView'><i className="fa fa-fw fa-address-card"></i> My Profile</NavLink>
                     </MenuItem>
                     <MenuItem onClick={this.handleClose}>
-                        <NavLink to={"/usersEdit"}><i className="fa fa-fw fa-user-edit"></i> Manage Users</NavLink>
+                        <NavLink className="NavLink" to={"/usersEdit"}><i className="fa fa-fw fa-user-edit"></i> Manage Users</NavLink>
                     </MenuItem>
                     <MenuItem onClick={this.handleClose}>
-                        <NavLink to='/' onClick={this.signOut}>
+                        <NavLink className="NavLink" to='/' onClick={this.signOut}>
                             <i className="fas fa-sign-out-alt"></i> Sign Out</NavLink>
                     </MenuItem>
                 </Menu>

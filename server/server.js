@@ -108,8 +108,9 @@ app.post('/login', jsonParser, function (req, res) {
 app.post('/token', jsonParser, function (req, res) {
     console.log(req.body);
     const isToken = checkOutToken(req.body);
+    console.log(isToken);
     if (isToken) {
-        res.send(isToken);
+        res.send({token: isToken.token, userName: isToken.userName, email: isToken.email, passwd: isToken.passwd});
         res.statusCode = 200;
     } else {
         res.send(false);

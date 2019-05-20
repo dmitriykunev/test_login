@@ -69,7 +69,7 @@ render() {
     return (
         <div>
             <div>
-                <formUser className={classes.container} noValidate autoComplete="off">
+                <form className={classes.container} noValidate autoComplete="off">
                     <TextField
                         id="outlined-name"
                         label="Name"
@@ -100,7 +100,8 @@ render() {
                     <Button variant="outlined" color="primary" className={classes.button} onClick={this.handleSaveUser}>
                         Save
                     </Button>
-                </formUser>
+                </form>
+            <br />
             </div>
 
         </div>

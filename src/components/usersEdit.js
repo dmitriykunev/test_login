@@ -29,7 +29,7 @@ class UsersEdit extends Component {
 
     userListGenerator = async () => {
         const { data } = await this.getUsersArray();
-        console.log(data)
+        console.log(data);
         if (data) {
             this.setState({
                 usersArray: data
