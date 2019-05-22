@@ -4,6 +4,13 @@ import DataTransaction from "./data_transaction.js";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
+import { connect } from 'react-redux';
+
+const mapStateToProps = state => {
+    return {
+        state: state
+    }
+};
 
 const styles = theme => ({
     container: {
@@ -58,9 +65,22 @@ handleChangeEmail = event => {
     });
 };
 
+handleRemove = () => {
+        const data = this.state;
+        // await DataTransaction.remove(data);
+        this.props.dispatch({
+            type: 'REMOVE_USER',
+            data
+        });
+    };
+
 handleSaveUser = async () => {
     const data = this.state;
     await DataTransaction.modify(data);
+    this.props.dispatch({
+        type: 'MODIFY_USER',
+        data
+    });
 };
 
 render() {
@@ -98,7 +118,10 @@ render() {
                         variant="outlined"
                     />
                     <Button variant="outlined" color="primary" className={classes.button} onClick={this.handleSaveUser}>
-                        Save
+                        Modify
+                    </Button>
+                    <Button variant="outlined" color="primary" className={classes.button} onClick={this.handleRemove}>
+                        Remove
                     </Button>
                 </form>
             <br />
@@ -110,4 +133,4 @@ render() {
 };
 }
 
-export default withStyles(styles)(UsersForm);
+export default withStyles(styles)(connect(mapStateToProps) (UsersForm));

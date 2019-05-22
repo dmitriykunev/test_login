@@ -49,7 +49,12 @@ function checkOutToken(data) {
     for (let i = 0; i < userList.length; i++) {
         if (userList[i].token === token) {
             console.log('Token check out finished...');
-            return {userName: userList[i].userName, passwd: userList[i].passwd, email: userList[i].email};
+            return {
+                userName: userList[i].userName,
+                passwd: userList[i].passwd,
+                email: userList[i].email,
+                token: userList[i].token
+            };
         }
         console.log('Token check out failed...')
     }

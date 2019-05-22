@@ -7,8 +7,7 @@ class Content extends Component {
         super(props);
         this.state = {
             userName: '',
-            passwd: '',
-            loggedIn: true
+            passwd: ''
         };
     };
 

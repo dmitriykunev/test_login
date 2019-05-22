@@ -3,7 +3,13 @@ import '../index.css';
 import DataTransaction from "./data_transaction.js";
 import NavBar from "./navbar";
 import UsersForm from './usersForm.js';
+import { connect } from 'react-redux';
 
+const mapStateToProps = state => {
+    return {
+        state: state
+    }
+};
 
 class UsersEdit extends Component {
     constructor(props) {
@@ -36,6 +42,14 @@ class UsersEdit extends Component {
             });
         }
 
+        this.state.usersArray.map(this.handleRedux)
+    };
+
+    handleRedux = (user) => {
+        this.props.dispatch({
+            type: 'POPULATE_USERS',
+            data: user
+        })
     };
 
     checkStateValid = async (token) => {
@@ -79,4 +93,4 @@ class UsersEdit extends Component {
     };
 }
 
-export default UsersEdit;
+export default connect(mapStateToProps) (UsersEdit);

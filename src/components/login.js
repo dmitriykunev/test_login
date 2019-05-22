@@ -1,13 +1,7 @@
 import React, {Component} from 'react';
 import '../index.css';
 import DataTransaction from "./data_transaction.js";
-import { connect } from 'react-redux';
 
-const mapStateToProps = state => {
-    return {
-        state: state
-    }
-};
 
 class Login extends Component {
     constructor(props) {
@@ -20,22 +14,12 @@ class Login extends Component {
     };
 
     handleChangeUserName = (event) => {
-        const data = event.target.value;
-        this.props.dispatch({
-           type: 'ADD_LOGIN',
-           data
-        });
         this.setState({
             userName: event.target.value
         });
     };
 
     handleChangePasswd = (event) => {
-        const data = event.target.value;
-        this.props.dispatch({
-            type: 'ADD_PASSWORD',
-            data
-        });
         this.setState({
             passwd: event.target.value
         });
@@ -69,14 +53,6 @@ class Login extends Component {
         this.props.history.push('/signUp')
     };
 
-    // handleSignUpButton = (event) => {
-    //     event.preventDefault();
-    //     this.setState({
-    //         signUp: true
-    //     });
-    //     // this.props.register(true)
-    // };
-
     render() {
         return (
             <div>
@@ -96,5 +72,4 @@ class Login extends Component {
     };
 };
 
-
-export default connect(mapStateToProps) (Login);
+export default Login;

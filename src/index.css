@@ -112,10 +112,10 @@ body {
     background-color: dodgerblue;
 }
 
-a:link {
+NavLink:link {
     text-decoration: none;
 }
 
-a:visited {
+NavLink:visited {
     text-decoration: none;
 }

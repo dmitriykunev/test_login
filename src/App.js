@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import DataTransaction from "./components/data_transaction.js";
-// import Login from './components/login.js';
-// import SignUp from './components/signUp';
 import { Redirect } from 'react-router-dom';
 import './index.css';
 
@@ -13,9 +11,7 @@ class TestLanding extends Component {
         this.state = {
             userName: '',
             passwd: '',
-            token: token,
-            loggedIn: false,
-            signUp: false
+            token: token
         };
 
     }
@@ -27,32 +23,13 @@ class TestLanding extends Component {
             if(data) {
                 this.setState({
                     token: data.token,
-                    userName: data.userName,
-                    loggedIn: data.loggedIn
+                    userName: data.userName
                 })
             } else {
                 return false
             }
         } return false
     };
-
-    // handleLoggedIn = (newState) => {
-    //     console.log(newState);
-    //     this.setState({
-    //         userName: newState.userName,
-    //         passwd: newState.passwd,
-    //         loggedIn: newState.loggedIn,
-    //         token: newState.token
-    //     });
-    //     console.log(this.state.loggedIn);
-    //     localStorage.setItem('token', this.state.token);
-    // };
-
-    // handleSignUP = (register) => {
-    //     this.setState({
-    //         signUp: register
-    //     })
-    // };
 
     render() {
         return (
@@ -61,11 +38,6 @@ class TestLanding extends Component {
                     this.state.token
                         ? <Redirect to='/content' />
                         : <Redirect to='/login' />
-                    // this.state.loggedIn && this.state.token
-                    //     ? <Fragment><NavBar name={this.state.userName} loggedIn={this.state.loggedIn}/><br /><Content /></Fragment>
-                    //     : this.state.signUp
-                    //     ? <SignUp newState={this.handleLoggedIn} />
-                    //     : <Login newState={this.handleLoggedIn} register={this.handleSignUP}/>
                 }
             </div>
 
