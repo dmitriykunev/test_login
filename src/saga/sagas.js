@@ -3,16 +3,13 @@ import DataTransaction from "../components/data_transaction";
 import { REMOVE_USER_SUCCESS, REMOVE_USER_FAIL, REMOVE_USER } from "../actions/index";
 
 function* removeUser(action) {
+    console.log(action.data);
     try {
-    const users = yield removeAsync(DataTransaction.post(action));
+    const users = yield DataTransaction.remove(action.data);
     yield put({type: 'REMOVE_USER_SUCCESS', data: users});
     } catch (e) {
         yield put({type: 'REMOVE_USER_FAIL', error: e.message});
     }
-}
-
-async function removeAsync (func) {
-    return await func
 }
 
 export function* sagas() {
