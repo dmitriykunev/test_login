@@ -42,6 +42,15 @@ function findTokenByUser(user) {
     }
 }
 
+function removeUserByToken(data) {
+    for(let i = 0; i < userList.length; i++) {
+        if(userList[i].token === data.token) {
+            const data = userList.splice(i, 1);
+            return true
+        }
+    }  return false
+};
+
 function checkOutToken(data) {
     console.log('Token check out started ...');
     const {token} = data;
@@ -147,9 +156,21 @@ app.put('/register', jsonParser, function (req, res) {
                 token: req.body.token
             });
         }
+        res.writeHead(res.statusCode = 400);
         res.send('This user is already registered, Choose another name!');
-        res.statusCode = 400
     }
+});
+
+app.post('/remove', jsonParser, function (req, res) {
+    console.log(req.body);
+   if (req.body) {
+       if(removeUserByToken(req.body)) {
+           res.send(userList);
+           res.statusCode = 200
+       }
+       res.writeHead(res.statusCode = 400);
+       res.send('Something wend wrong ... User was not removed!');
+   }
 });
 
 app.listen(3001, function () {

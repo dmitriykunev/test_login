@@ -7,3 +7,5 @@ export const ADD_USER = 'ADD_USER';
 export const REMOVE_USER = 'REMOVE_USER';
 export const MODIFY_USER = 'MODIFY_USER';
 export const POPULATE_USERS = 'POPULATE_USERS';
+export const REMOVE_USER_SUCCESS = 'REMOVE_USER_SUCCESS';
+export const REMOVE_USER_FAIL = 'REMOVE_USER_FAIL';

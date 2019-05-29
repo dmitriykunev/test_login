@@ -1,6 +1,6 @@
 import {
     ADD_USER,
-    REMOVE_USER,
+    REMOVE_USER_SUCCESS,
     MODIFY_USER,
     POPULATE_USERS
 } from '../constants/index';
@@ -11,7 +11,7 @@ function usersReducer(state = initialState, action) {
     switch(action.type) {
         case ADD_USER:
             return [...state, action.data];
-        case REMOVE_USER:
+        case REMOVE_USER_SUCCESS:
             for (let i = 0; i < state.length; i++) {
                 if (state[i].token === action.data.token) {
                     const removed = state.splice(i, 1);
@@ -21,7 +21,8 @@ function usersReducer(state = initialState, action) {
         case MODIFY_USER:
             for (let i = 0; i <= state.length; i++) {
                if (state[i].token === action.data.token) {
-                   return state.splice(i, 1, action.data)
+                   const removed = state.splice(i, 1, action.data);
+                   return state
                }
             } return state;
         case POPULATE_USERS: // NOT FINISHED

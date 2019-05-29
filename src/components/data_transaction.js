@@ -19,6 +19,9 @@ class DataTransaction {
    getUsers() {
        return axios.get(URL + '/getUsers');
    }
+   remove(payload) {
+       return axios.post(URL + '/remove', payload);
+   }
 }
 
 export default new DataTransaction();

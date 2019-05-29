@@ -7,6 +7,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
+    console.log(state);
     return {
         state: state
     }

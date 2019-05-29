@@ -7,25 +7,19 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-        state: state
+        userName: state.profileReducer.userName,
+        passwd: state.profileReducer.password,
+        token: state.profileReducer.token,
+        email: state.profileReducer.email,
+        usersArray: state.usersReducer
     }
 };
 
 class UsersEdit extends Component {
-    constructor(props) {
-        super(props);
-        const token = localStorage.getItem('token');
-        this.checkStateValid({"token": token});
-        this.state = {
-            token: '',
-            userName: '',
-            passwd: '',
-            email: '',
-            usersArray: []
-        };
-    }
 
     componentDidMount() {
+        const token = localStorage.getItem('token');
+        this.checkStateValid({"token": token});
         this.userListGenerator()
     }
 
@@ -35,14 +29,10 @@ class UsersEdit extends Component {
 
     userListGenerator = async () => {
         const { data } = await this.getUsersArray();
-        console.log(data);
         if (data) {
-            this.setState({
-                usersArray: data
-            });
+            console.log(data);
+            data.map(this.handleRedux)
         }
-
-        this.state.usersArray.map(this.handleRedux)
     };
 
     handleRedux = (user) => {
@@ -55,15 +45,7 @@ class UsersEdit extends Component {
     checkStateValid = async (token) => {
         if (token) {
             const {data} = await DataTransaction.token(token);
-            const newToken = localStorage.getItem('token');
-            if (data) {
-                this.setState({
-                    token: newToken,
-                    userName: data.userName,
-                    passwd: data.passwd,
-                    email: data.email
-                })
-            } else {
+            if (!data) {
                 this.props.history.push('/login')
             }
         }
@@ -76,7 +58,12 @@ class UsersEdit extends Component {
         </div>
     );
 
-    renderUser = (user) => <div key={user.token} ><UsersForm userName={user.userName} passwd={user.passwd} email={user.email} token={user.token} /></div>
+    renderUser = (user) => <div key={user.token} ><UsersForm
+        userName={user.userName}
+        passwd={user.passwd}
+        email={user.email}
+        token={user.token}
+    /></div>
 
 
     render() {
@@ -85,7 +72,7 @@ class UsersEdit extends Component {
                 <NavBar/>
 
                 {
-                    this.state.usersArray.length === 0 ? this.renderNoData() : this.state.usersArray.map(this.renderUser)
+                    this.props.usersArray.length === 0 ? this.renderNoData() : this.props.usersArray.map(this.renderUser)
                 }
             </div>
         )
