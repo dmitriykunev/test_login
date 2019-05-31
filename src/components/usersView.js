@@ -10,7 +10,9 @@ const mapStateToProps = state => {
         userName: state.profileReducer.userName,
         passwd: state.profileReducer.password,
         token: state.profileReducer.token,
-        email: state.profileReducer.email
+        email: state.profileReducer.email,
+        info: state.profileReducer.info,
+        error: state.profileReducer.error
     }
 };
 
@@ -43,21 +45,25 @@ class UsersView extends Component {
                 //     token: data.token
                 // });
                 this.props.dispatch({
-                    type: 'CHANGE_PROFILE_EMAIL',
-                    data: data.email
-                });
-                this.props.dispatch({
-                    type: 'CHANGE_PROFILE_NAME',
-                    data: data.userName
-                });
-                this.props.dispatch({
-                    type: 'CHANGE_PROFILE_PASSWORD',
-                    data: data.passwd
-                });
-                this.props.dispatch({
-                    type: 'CHANGE_PROFILE_TOKEN',
-                    data: data.token
-                });
+                    type: 'POPULATE_PROFILE',
+                    data
+                })
+                // this.props.dispatch({
+                //     type: 'CHANGE_PROFILE_EMAIL',
+                //     data: data.email
+                // });
+                // this.props.dispatch({
+                //     type: 'CHANGE_PROFILE_NAME',
+                //     data: data.userName
+                // });
+                // this.props.dispatch({
+                //     type: 'CHANGE_PROFILE_PASSWORD',
+                //     data: data.passwd
+                // });
+                // this.props.dispatch({
+                //     type: 'CHANGE_PROFILE_TOKEN',
+                //     data: data.token
+                // });
             } else {
                 this.props.history.push('/login')
             }

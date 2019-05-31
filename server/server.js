@@ -9,14 +9,14 @@ let userList = [
         passwd: '123456',
         token: 'otsotzlinl',
         email: 'dmitriy@gmail.com',
-        active: true
+        info: 'This is my Profile information'
     },
     {
         userName: 'B@rt',
         passwd: '123456',
         token: '89gwrzedtyi',
         email: 'bArt@gmail.com',
-        active: true
+        info: 'This is my Profile information'
     }
 ];
 
@@ -62,7 +62,8 @@ function checkOutToken(data) {
                 userName: userList[i].userName,
                 passwd: userList[i].passwd,
                 email: userList[i].email,
-                token: userList[i].token
+                token: userList[i].token,
+                info: userList[i].info
             };
         }
         console.log('Token check out failed...')
@@ -112,7 +113,7 @@ app.post('/login', jsonParser, function (req, res) {
             res.send({userName: req.body.userName, passwd: req.body.password, token: token});
             console.log('Query finished')
         } else {
-            res.send({userName: req.body.userName, passwd: req.body.password, loggedIn: false})
+            res.send({userName: req.body.userName, passwd: req.body.password})
         }
     } else {
         res.statusCode = 400
@@ -124,7 +125,11 @@ app.post('/token', jsonParser, function (req, res) {
     const isToken = checkOutToken(req.body);
     console.log(isToken);
     if (isToken) {
-        res.send({token: isToken.token, userName: isToken.userName, email: isToken.email, passwd: isToken.passwd});
+        res.send({token: isToken.token,
+            userName: isToken.userName,
+            email: isToken.email,
+            passwd: isToken.passwd,
+            info: isToken.info});
         res.statusCode = 200;
     } else {
         res.send(false);

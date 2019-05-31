@@ -1,35 +1,20 @@
 import {
-    CHANGE_PROFILE_NAME,
-    CHANGE_PROFILE_EMAIL,
-    CHANGE_PROFILE_INFO,
-    CHANGE_PROFILE_PASSWORD,
-    CHANGE_PROFILE_TOKEN,
+    CHANGE_PROFILE,
+    CHANGE_PROFILE_SUCCESS,
+    CHANGE_PROFILE_FAIL,
     ADD_USER,
     REMOVE_USER,
-    MODIFY_USER,
     POPULATE_USERS,
     REMOVE_USER_SUCCESS,
     REMOVE_USER_FAIL
 } from '../constants/index';
 
-export function changeProfileName(payload) {
-    return { type: CHANGE_PROFILE_NAME, payload }
+export function addUser(payload) {
+    return { type: ADD_USER, payload }
 };
 
-export function changeProfileEmail(payload) {
-    return { type: CHANGE_PROFILE_EMAIL, payload }
-};
-
-export function changeProfilePassword(payload) {
-    return { type: CHANGE_PROFILE_PASSWORD, payload }
-};
-
-export function changeProfileToken(payload) {
-    return { type: CHANGE_PROFILE_TOKEN, payload }
-};
-
-export function changeProfileInfo(payload) {
-    return { type: CHANGE_PROFILE_INFO, payload }
+export function populateUsers(payload) {
+    return { type: POPULATE_USERS, payload }
 };
 
 export function removeUser(payload) {
@@ -42,5 +27,17 @@ export function removeUserFail(payload) {
 
 export function removeUserSuccess(payload) {
     return { type: REMOVE_USER_SUCCESS, payload }
+};
+
+export function changeProfile(payload) {
+    return { type: CHANGE_PROFILE, payload }
+};
+
+export function changeProfileSuccess(payload) {
+    return { type: CHANGE_PROFILE_SUCCESS, payload }
+};
+
+export function changeProfileFail(payload) {
+    return { type: CHANGE_PROFILE_FAIL, payload }
 };
 

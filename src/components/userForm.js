@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../index.css';
-import DataTransaction from "./data_transaction.js";
+// import DataTransaction from "./data_transaction.js";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
@@ -43,47 +43,53 @@ class UserForm extends Component {
             userName: this.props.userName,
             passwd: this.props.passwd,
             token: this.props.token,
-            email: this.props.email
+            email: this.props.email,
+            info: this.props.info,
+            error: this.props.error
         };
     }
 
 
     handleChangeUserName = event => {
-        const data = event.target.value;
-        this.props.dispatch({
-            type: 'CHANGE_PROFILE_NAME',
-            data
-        });
+        // const data = event.target.value;
+        // this.props.dispatch({
+        //     type: 'CHANGE_PROFILE_NAME',
+        //     data
+        // });
         this.setState({
             userName: event.target.value,
         });
     };
 
     handleChangePassword = event => {
-        const data = event.target.value;
-        this.props.dispatch({
-            type: 'CHANGE_PROFILE_PASSWORD',
-            data
-        });
+        // const data = event.target.value;
+        // this.props.dispatch({
+        //     type: 'CHANGE_PROFILE_PASSWORD',
+        //     data
+        // });
         this.setState({
             passwd: event.target.value,
         });
     };
 
     handleChangeEmail = event => {
-        const data = event.target.value;
-        this.props.dispatch({
-            type: 'CHANGE_PROFILE_EMAIL',
-            data
-        });
+        // const data = event.target.value;
+        // this.props.dispatch({
+        //     type: 'CHANGE_PROFILE_EMAIL',
+        //     data
+        // });
         this.setState({
             email: event.target.value,
         });
     };
 
-    handleSaveUser = async () => {
+    handleSaveUser = () => {
         const data = this.state;
-        await DataTransaction.modify(data);
+        // DataTransaction.modify(data);
+        this.props.dispatch({
+            type: 'CHANGE_PROFILE_SUCCESS',
+            data
+        });
     };
 
     render() {
