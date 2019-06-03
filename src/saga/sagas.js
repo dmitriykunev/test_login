@@ -1,12 +1,5 @@
 import { put, takeEvery, all } from 'redux-saga/effects';
 import DataTransaction from "../components/data_transaction";
-import { REMOVE_USER_SUCCESS,
-    REMOVE_USER_FAIL,
-    REMOVE_USER,
-    CHANGE_PROFILE,
-    CHANGE_PROFILE_SUCCESS,
-    CHANGE_PROFILE_FAIL
-} from "../actions/index";
 
 function* removeUserAsync(action) {
     console.log(action.data);
@@ -19,12 +12,21 @@ function* removeUserAsync(action) {
 }
 
 function* changeProfileAsync(action) {
+    console.log('action', action);
     try {
-        const user = yield DataTransaction.modify(action.data);
-        console.log(user);
+        const user = yield DataTransaction.modify(action.payload);
+        console.log('Saga request finished');
         yield put({type: 'CHANGE_PROFILE_SUCCESS', data: user});
+        yield this.props.dispatch({
+            type: 'CHANGE_PROFILE_SUCCESS',
+            data: user
+            });
     } catch (e) {
         yield put({type: 'CHANGE_PROFILE_FAIL', error: e.message});
+        yield this.props.dispatch({
+            type: 'CHANGE_PROFILE_FAIL',
+            error: e.message
+        });
     }
 }
 
@@ -32,13 +34,15 @@ function* changeProfile() {
     yield takeEvery('CHANGE_PROFILE', changeProfileAsync);
 }
 
-function* removeUser() {
+function* removeUser(payload) {
     yield takeEvery('REMOVE_USER', removeUserAsync);
 }
 
-export default function* rootSaga() {
+function* rootSaga() {
     yield all([
-        removeUser,
-        changeProfile
+        removeUser(),
+        changeProfile()
     ]);
 }
+
+export default rootSaga;

@@ -7,9 +7,13 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
-    console.log(state);
     return {
-        state: state
+        userName: state.profileReducer.userName,
+        passwd: state.profileReducer.password,
+        token: state.profileReducer.token,
+        email: state.profileReducer.email,
+        info: state.profileReducer.info,
+        error: state.profileReducer.error
     }
 };
 
@@ -85,10 +89,11 @@ class UserForm extends Component {
 
     handleSaveUser = () => {
         const data = this.state;
+         //console.log(data);
         // DataTransaction.modify(data);
         this.props.dispatch({
-            type: 'CHANGE_PROFILE_SUCCESS',
-            data
+            type: 'CHANGE_PROFILE',
+            payload:data
         });
     };
 

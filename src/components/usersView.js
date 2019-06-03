@@ -36,7 +36,7 @@ class UsersView extends Component {
     checkStateValid = async (token) => {
         if (token) {
             const {data} = await DataTransaction.token(token);
-            console.log(data);
+            // console.log(data);
             if (data) {
                 // this.setState({
                 //     userName: data.userName,

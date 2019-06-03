@@ -18,7 +18,7 @@ function profileReducer(state = initialState, action) {
         case CHANGE_PROFILE_SUCCESS:
             return {...state, userName: action.data.userName,
                 email: action.data.email,
-                password: action.data.password,
+                password: action.data.passwd,
                 token: action.data.token,
                 info: action.data.info};
         case CHANGE_PROFILE_FAIL:
