@@ -26,7 +26,7 @@ function userLookUp(name, passwd) {
     for (let i = 0; i < userList.length; i++) {
         if (userList[i].userName === name) {
             if (userList[i].passwd === passwd) {
-                return true
+                return userList[i]
             }
         }
     }
@@ -65,24 +65,22 @@ function checkOutToken(data) {
                 token: userList[i].token,
                 info: userList[i].info
             };
-        }
-        console.log('Token check out failed...')
+        } console.log('Token check out failed...');
+        return false;
     }
-
-    return false;
-    console.log('Token check out failed...')
 }
 
 function modifyUser(payload) {
     console.log('Modification started...');
     for (let i = 0; i < userList.length; i+= 1) {
         if (userList[i].token === payload.token) {
-            console.log('Token Match... Start Changing the DB...');
+            console.log('Token Matched... Start Changing the DB...');
             const newUserList = userList.splice(i, 1, payload);
             console.log(newUserList);
             console.log(userList);
             // userList = newUserList;
-            return 'Modification Done!'
+            console.log('Modification Done!');
+            return userList[i]
         }
     } return console.log('Modification failed...')
 }
@@ -106,14 +104,12 @@ function userRegister(name, passwd, token, email) {
 app.use(cors());
 
 app.post('/login', jsonParser, function (req, res) {
-    console.log(req.body);
     if (req.body) {
-        if (userLookUp(req.body.userName, req.body.password)) {
-            const token = findTokenByUser(req.body.userName);
-            res.send({userName: req.body.userName, passwd: req.body.password, token: token});
+        const user = userLookUp(req.body.userName, req.body.password);
+        console.log(user);
+        if(user) {
+            res.send(user);
             console.log('Query finished')
-        } else {
-            res.send({userName: req.body.userName, passwd: req.body.password})
         }
     } else {
         res.statusCode = 400
@@ -125,6 +121,7 @@ app.post('/token', jsonParser, function (req, res) {
     const isToken = checkOutToken(req.body);
     console.log(isToken);
     if (isToken) {
+        console.log(isToken);
         res.send({token: isToken.token,
             userName: isToken.userName,
             email: isToken.email,
@@ -145,8 +142,9 @@ app.get('/getUsers', function (req, res) {
 
 app.put('/modify', jsonParser, function (req, res) {
     console.log(req.body);
-    modifyUser(req.body);
-    res.send(userList);
+    const data = modifyUser(req.body);
+    console.log(data);
+    res.send(data);
     res.statusCode = 200
 });
 

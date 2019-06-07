@@ -3,13 +3,6 @@ import NavBar from './navbar';
 import '../index.css';
 
 class Content extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            userName: '',
-            passwd: ''
-        };
-    };
 
     render() {
         return (

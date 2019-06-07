@@ -1,7 +1,18 @@
 import React, {Component} from 'react';
 import '../index.css';
 import DataTransaction from "./data_transaction.js";
+import {connect} from "react-redux";
 
+const mapStateToProps = state => {
+    return {
+        userName: state.profileReducer.userName,
+        passwd: state.profileReducer.password,
+        token: state.profileReducer.token,
+        email: state.profileReducer.email,
+        info: state.profileReducer.info,
+        error: state.profileReducer.error
+    }
+};
 
 class Login extends Component {
     constructor(props) {
@@ -37,6 +48,17 @@ class Login extends Component {
             passwd: data.passwd,
             token: data.token
         });
+        if(data) {
+            console.log(data);
+            this.props.dispatch({
+                type: 'POPULATE_PROFILE_SUCCESS',
+                data
+            });
+        } else {
+            this.props.dispatch({
+                type: 'POPULATE_PROFILE_FAIL'
+            });
+        }
         this.updateLocalStorage(data);
         if(this.state.token) {
             this.props.history.push('/content')
@@ -44,7 +66,7 @@ class Login extends Component {
     };
 
     updateLocalStorage = (data) => {
-        localStorage.setItem('userName', data.userName);
+        // localStorage.setItem('userName', data.userName);
         localStorage.setItem('token', data.token);
     };
 
@@ -72,4 +94,4 @@ class Login extends Component {
     };
 };
 
-export default Login;
+export default connect(mapStateToProps) (Login);

@@ -1,39 +1,14 @@
 import React, {Component} from 'react';
 import '../index.css';
 import DataTransaction from "./data_transaction.js";
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { withStyles } from '@material-ui/core/styles';
+import MaterialTable from 'material-table';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
     return {
-        state: state
+        state
     }
 };
-
-const styles = theme => ({
-    container: {
-        display: 'flex',
-        flexWrap: 'wrap',
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-    },
-    button: {
-        margin: theme.spacing.unit,
-    },
-    input: {
-        display: 'none',
-    },
-    dense: {
-        marginTop: 16,
-    },
-    menu: {
-        width: 200,
-    },
-});
 
 class UsersForm extends Component {
     constructor(props) {
@@ -88,45 +63,7 @@ render() {
 
     return (
         <div>
-            <div>
-                <form className={classes.container} noValidate autoComplete="off">
-                    <TextField
-                        id="outlined-name"
-                        label="Name"
-                        className={classes.textField}
-                        value={this.state.userName}
-                        onChange={this.handleChangeUserName}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-name"
-                        label="Password"
-                        className={classes.textField}
-                        value={this.state.passwd}
-                        onChange={this.handleChangePassword}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <TextField
-                        id="outlined-name"
-                        label="E-mail"
-                        className={classes.textField}
-                        value={this.state.email}
-                        onChange={this.handleChangeEmail}
-                        margin="normal"
-                        variant="outlined"
-                    />
-                    <Button variant="outlined" color="primary" className={classes.button} onClick={this.handleSaveUser}>
-                        Modify
-                    </Button>
-                    <Button variant="outlined" color="primary" className={classes.button} onClick={this.handleRemove}>
-                        Remove
-                    </Button>
-                </form>
-            <br />
-            </div>
-
+            NO DATA SO FAR
         </div>
 
     )

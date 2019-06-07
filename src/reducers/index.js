@@ -7,20 +7,6 @@ export default combineReducers({
     usersReducer
 });
 
-// function rootReducer(state = initialState, action) {
-//     switch(action.type) {
-//         case CHANGE_LOGIN:
-//             return {...state, userName: action.data};//Object.assign({}, state, {userName: state.userName.concat(action.data)});
-//         case CHANGE_PASSWORD:
-//             return {...state, password: action.data};//Object.assign({}, state, {password: state.password.concat(action.data)});
-//         case CHANGE_EMAIL:
-//             return {...state, email: action.data};
-//         default:
-//             return state;
-//     }
-// }
-
-
 /*
 
 - редактрование, добавление, удаление пользователей

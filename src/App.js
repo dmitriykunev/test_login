@@ -1,7 +1,18 @@
 import React, { Component } from 'react';
-import DataTransaction from "./components/data_transaction.js";
-import { Redirect } from 'react-router-dom';
 import './index.css';
+import {connect} from "react-redux";
+import DataTransaction from "./components/data_transaction.js";
+
+const mapStateToProps = state => {
+    return {
+        userName: state.profileReducer.userName,
+        passwd: state.profileReducer.password,
+        token: state.profileReducer.token,
+        email: state.profileReducer.email,
+        info: state.profileReducer.info,
+        error: state.profileReducer.error
+    }
+};
 
 class TestLanding extends Component {
     constructor(props) {
@@ -9,35 +20,30 @@ class TestLanding extends Component {
         const token = localStorage.getItem('token');
         this.checkStateValid({"token": token});
         this.state = {
-            userName: '',
-            passwd: '',
             token: token
         };
-
-    }
+    };
 
     checkStateValid = async (token) => {
-        if(token) {
-            const {data} = await DataTransaction.token(token);
-            // console.log(this.state);
-            if(data) {
-                this.setState({
-                    token: data.token,
-                    userName: data.userName
-                })
-            } else {
-                return false
-            }
-        } return false
+            console.log('Quering Token...');
+        const {data} = await DataTransaction.token(token);
+        console.log('This is the LOG from Token query', data);
+        this.props.dispatch({
+            type: 'TOKEN_CHECK',
+            token: data
+        });
+        return data
     };
 
     render() {
+        // console.log('State token' + this.state.token);
+        // console.log('Saga token in props' + this.props.token);
         return (
             <div>
                 {
                     this.state.token
-                        ? <Redirect to='/content' />
-                        : <Redirect to='/login' />
+                        ? this.props.history.push('/content')
+                        : this.props.history.push('/login')
                 }
             </div>
 
@@ -47,4 +53,4 @@ class TestLanding extends Component {
 
 
 
-export default TestLanding;
+export default connect(mapStateToProps) (TestLanding);

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import '../index.css';
-// import DataTransaction from "./data_transaction.js";
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
@@ -88,12 +87,15 @@ class UserForm extends Component {
     };
 
     handleSaveUser = () => {
-        const data = this.state;
-         //console.log(data);
-        // DataTransaction.modify(data);
+        const data = {
+            userName: this.state.userName,
+            token: this.props.token,
+            passwd: this.state.passwd,
+            email: this.state.email,
+            info: this.state.info };
         this.props.dispatch({
             type: 'CHANGE_PROFILE',
-            payload:data
+            data
         });
     };
 

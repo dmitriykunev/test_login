@@ -33,8 +33,15 @@ function usersReducer(state = initialState, action) {
         //            return state
         //        }
         //     } return state;
-        case POPULATE_USERS: // NOT FINISHED
-            return (state.length <= 1 ) ? [...state, action.data] : state;
+        case POPULATE_USERS:
+            return state;
+        case POPULATE_USERS_SUCCESS: // NOT FINISHED
+                const newState = action.payload.map(function (elem) {
+                    return elem;
+                });
+                return [...newState];
+        case POPULATE_USERS_FAIL:
+            return state;
         default:
             return state;
     }
