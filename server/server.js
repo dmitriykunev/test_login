@@ -3,6 +3,15 @@ var app = express();
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
+// const Sequelize = require('sequelize');
+// const sequelize = new Sequelize('mysql://dmitriy:123456@localhost/userList');
+
+const {userList: User} = require('./models');
+// console.log('db', Object.keys(db));
+User.create({userName: 'fnord', password: 'omnomnom'}).then((data) => {
+    console.log('db', data);
+});
+
 let userList = [
     {
         userName: 'dmitriy',
@@ -34,6 +43,7 @@ function userLookUp(name, passwd) {
 }
 
 function findTokenByUser(user) {
+    // return userList.find(( userFromCollect) => userFromCollect.userName === user).token;
     console.log('User Found checking token...');
     for (let i = 0; i < userList.length; i++) {
         if (userList[i].userName === user) {
@@ -43,18 +53,19 @@ function findTokenByUser(user) {
 }
 
 function removeUserByToken(data) {
-    for(let i = 0; i < userList.length; i++) {
-        if(userList[i].token === data.token) {
+    for (let i = 0; i < userList.length; i++) {
+        if (userList[i].token === data.token) {
             const removed = userList.splice(i, 1);
             return true
         }
-    }  return false
+    }
+    return false
 };
 
 function checkOutToken(data) {
     console.log('Token check out started ...');
     const {token} = data;
-
+    // return userList.find( item => item.token === token);
     for (let i = 0; i < userList.length; i++) {
         if (userList[i].token === token) {
             console.log('Token check out finished...');
@@ -65,14 +76,15 @@ function checkOutToken(data) {
                 token: userList[i].token,
                 info: userList[i].info
             };
-        } console.log('Token check out failed...');
+        }
+        console.log('Token check out failed...');
         return false;
     }
 }
 
 function modifyUser(payload) {
     console.log('Modification started...');
-    for (let i = 0; i < userList.length; i+= 1) {
+    for (let i = 0; i < userList.length; i += 1) {
         if (userList[i].token === payload.token) {
             console.log('Token Matched... Start Changing the DB...');
             const newUserList = userList.splice(i, 1, payload);
@@ -82,7 +94,8 @@ function modifyUser(payload) {
             console.log('Modification Done!');
             return userList[i]
         }
-    } return console.log('Modification failed...')
+    }
+    return console.log('Modification failed...')
 }
 
 function userRegister(name, passwd, token, email) {
@@ -107,7 +120,7 @@ app.post('/login', jsonParser, function (req, res) {
     if (req.body) {
         const user = userLookUp(req.body.userName, req.body.password);
         console.log(user);
-        if(user) {
+        if (user) {
             res.send(user);
             console.log('Query finished')
         }
@@ -115,21 +128,26 @@ app.post('/login', jsonParser, function (req, res) {
         res.statusCode = 400
     }
 });
-
-app.post('/token', jsonParser, function (req, res) {
+app.use(jsonParser);
+app.post('/token', function (req, res) {
     console.log(req.body);
     const isToken = checkOutToken(req.body);
     console.log(isToken);
     if (isToken) {
         console.log(isToken);
-        res.send({token: isToken.token,
+        res.send({
+            token: isToken.token,
             userName: isToken.userName,
             email: isToken.email,
             passwd: isToken.passwd,
-            info: isToken.info});
+            info: isToken.info
+        });
         res.statusCode = 200;
     } else {
-        res.send(false);
+        res.statusCode(400).send(false);
+        // res.json({
+        //
+        // })
         res.statusCode = 400;
     }
 });
@@ -140,23 +158,23 @@ app.get('/getUsers', function (req, res) {
     res.statusCode = 200
 });
 
-app.put('/modify', jsonParser, function (req, res) {
+app.put('/modify', function (req, res) {
     console.log(req.body);
     const data = modifyUser(req.body);
     console.log(data);
     res.send(data);
     res.statusCode = 200
 });
-
-app.put('/register', jsonParser, function (req, res) {
+app.put('/register', function (req, res) {
+    const {userName, password, token, email} = req.body;
     console.log(req.body);
     if (req.body) {
-        if (userRegister(req.body.userName, req.body.password, req.body.token, req.body.email)) {
+        if (userRegister(userName, password, token, email)) {
             res.send({
-                userName: req.body.userName,
-                passwd: req.body.password,
-                email: req.body.email,
-                token: req.body.token
+                userName,
+                passwd: password,
+                email,
+                token
             });
         }
         res.writeHead(res.statusCode = 400);
@@ -164,17 +182,17 @@ app.put('/register', jsonParser, function (req, res) {
     }
 });
 
-app.post('/remove', jsonParser, function (req, res) {
+app.post('/remove', function (req, res) {
     console.log(req.body);
-   if (req.body) {
-       if(removeUserByToken(req.body)) {
-           res.end(userList);
-           res.statusCode = 200
+    if (req.body) {
+        if (removeUserByToken(req.body)) {
+            res.end(userList);
+            res.statusCode = 200
 
-       }
-       res.writeHead(res.statusCode = 400);
-       res.end('Something wend wrong ... User was not removed!');
-   }
+        }
+        res.writeHead(res.statusCode = 400);
+        res.end('Something wend wrong ... User was not removed!');
+    }
 });
 
 app.listen(3001, function () {

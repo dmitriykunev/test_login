@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import '../index.css';
 import NavBar from "./navbar";
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
+import { createStyles, withStyles } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -17,32 +17,45 @@ const mapStateToProps = state => {
     }
 };
 
-const data = this.props.users.map(function(elem) {
-    return
-})
-const rows = []
-// const rows = [
-//     this.createData(this.props.users, 159, 6.0, 24, 4.0),
-// ];
+// const usersFlat = () => {
+//     const newArray = this.props.users.map(function(elem) {
+//         return (Object.values(elem));
+//     });
+// };
+//
+// const rows = createData(usersFlat());
+//
+// function createData(name, password, email) {
+//     return { name, password, email };
+// };
 
-function createData(name, password, email) {
-    return { name, password, email };
-}
 
-const useStyles = makeStyles(theme => ({
+
+
+const drawerWidth = 240;
+
+const styles = (theme) => createStyles({
     root: {
-        width: '100%',
-        marginTop: theme.spacing(3),
+        width: '70%',
+        marginTop: '50px',
+        marginLeft: '20%',
+        marginRight: '20%',
         overflowX: 'auto',
+        alignCenter: 'center',
+    },
+    drawer: {
+        width: drawerWidth,
+        flexShrink: 0,
     },
     table: {
         minWidth: 650,
+        positionAlign: 'center',
+        boxAlign: 'center',
     },
-}));
-
-const classes = useStyles();
+});
 
 class UsersEdit extends Component {
+
 
     componentWillMount() {
         const token = localStorage.getItem('token');
@@ -62,11 +75,12 @@ class UsersEdit extends Component {
     };
 
     render() {
+        const rows = this.props.users;
             return (
                 <div>
                     <NavBar/>
-                    <Paper className={classes.root}>
-                        <Table className={classes.table}>
+                    <Paper className={this.props.classes.root}>
+                        <Table className={this.props.classes.table}>
                             <TableHead>
                                 <TableRow>
                                     <TableCell>Login</TableCell>
@@ -76,14 +90,12 @@ class UsersEdit extends Component {
                             </TableHead>
                             <TableBody>
                                 {rows.map(row => (
-                                    <TableRow key={row.name}>
+                                    <TableRow key={row.userName}>
                                         <TableCell component="th" scope="row">
-                                            {row.name}
+                                            {row.userName}
                                         </TableCell>
-                                        <TableCell align="right">{row.calories}</TableCell>
-                                        <TableCell align="right">{row.fat}</TableCell>
-                                        <TableCell align="right">{row.carbs}</TableCell>
-                                        <TableCell align="right">{row.protein}</TableCell>
+                                        <TableCell align="right">{row.passwd}</TableCell>
+                                        <TableCell align="right">{row.email}</TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>
@@ -95,4 +107,4 @@ class UsersEdit extends Component {
         };
     }
 
-export default connect(mapStateToProps) (UsersEdit);
+export default connect(mapStateToProps) (withStyles(styles)(UsersEdit));
