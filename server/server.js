@@ -3,12 +3,27 @@ var app = express();
 var cors = require('cors');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
-// const Sequelize = require('sequelize');
-// const sequelize = new Sequelize('mysql://dmitriy:123456@localhost/userList');
 
-const {userList: User} = require('./models');
-// console.log('db', Object.keys(db));
-User.create({userName: 'fnord', password: 'omnomnom'}).then((data) => {
+// const {NewUserBase: NewUserBase} = require('./models');
+// // console.log('db', Object.keys(db));
+// NewUserBase.create({
+//     userName: 'dmitriy',
+//     password: '123456',
+//     token: 'otsotzlinl',
+//     email: 'dmitriy@gmail.com',
+//     info: 'This is my DB Profile information'
+// }).then((data) => {
+//     console.log('db', data);
+// });
+
+const {NewUserBase: NewUserBase} = require('./models');
+NewUserBase.update({
+    password: '654321'
+}, {
+    where: {
+        token: 'otsotzlinl',
+    }
+}).then((data) => {
     console.log('db', data);
 });
 
@@ -31,6 +46,16 @@ let userList = [
 
 function userLookUp(name, passwd) {
     console.log('Searching a user');
+    // const {NewUserBase: NewUserBase} = require('./models');
+    // NewUserBase.findAll({
+    //     where: {
+    //         userName: name,
+    //         password: passwd
+    //     }
+    // }).then((data) => {
+    //     console.log('db', data);
+    // });
+
 
     for (let i = 0; i < userList.length; i++) {
         if (userList[i].userName === name) {
