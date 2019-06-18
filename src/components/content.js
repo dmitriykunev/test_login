@@ -1,11 +1,34 @@
 import React, {Component, Fragment} from 'react';
 import NavBar from './navbar';
 import '../index.css';
+// import DataTransaction from "./data_transaction.js";
+import {connect} from "react-redux";
+
+const mapStateToProps = state => {
+    return {
+        userName: state.profileReducer.userName,
+        passwd: state.profileReducer.password,
+        token: state.profileReducer.token,
+        email: state.profileReducer.email,
+        info: state.profileReducer.info,
+        error: state.profileReducer.error
+    }
+};
 
 class Content extends Component {
+componentDidMount() {
+    const token = localStorage.getItem('token');
+    if(token) {
+        console.log(token);
+        this.props.dispatch({
+            type: 'TOKEN_CHECK',
+            token: token
+        })
+    } else {this.props.history.push('/login')};
+}
 
     render() {
-        return (
+         return (
             <Fragment><NavBar />
             <div>
                 <h1>Custom Title</h1>
@@ -53,4 +76,4 @@ class Content extends Component {
     };
 }
 
-export default Content;
+export default connect(mapStateToProps) (Content);

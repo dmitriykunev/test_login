@@ -1,9 +1,10 @@
 import {
+    ADD_USER_SUCCESS,
+    ADD_USER_FAIL,
     CHANGE_PROFILE_SUCCESS,
     CHANGE_PROFILE_FAIL,
     POPULATE_PROFILE_SUCCESS,
     POPULATE_PROFILE_FAIL,
-    TOKEN_CHECK,
     TOKEN_CHECK_SUCCESS,
     TOKEN_CHECK_FAIL
 } from '../constants/index';
@@ -34,7 +35,7 @@ function profileReducer(state = initialState, action) {
                 ...state,
                 userName: action.data.userName,
                 email: action.data.email,
-                password: action.data.passwd,
+                password: action.data.password,
                 token: action.data.token,
                 info: action.data.info
             };
@@ -42,8 +43,19 @@ function profileReducer(state = initialState, action) {
             return {
                 ...state, error: 'Error happened while processing profile info...'
             };
-        case TOKEN_CHECK:
-            return state;
+        case ADD_USER_SUCCESS:
+            return {
+                ...state,
+                userName: action.data.userName,
+                email: action.data.email,
+                password: action.data.password,
+                token: action.data.token,
+                info: action.data.info
+            };
+        case ADD_USER_FAIL:
+            return {
+                ...state, error: 'Error happened while processing New User Data...'
+            };
         case TOKEN_CHECK_SUCCESS:
             return {...state,
                 userName: action.payload.userName,

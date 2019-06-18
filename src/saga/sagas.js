@@ -33,8 +33,9 @@ function* changeProfileAsync(action) {
 }
 
 function* tokenCheckAsync(action) {
-    const data = yield call(DataTransaction.token, action.token);
-    // console.log(data);
+    console.log(action.token);
+    const data = yield call(DataTransaction.token, {token: action.token});
+    console.log(data);
     if(data) {
         yield put(tokenCheckSuccess(data.data));
     } else {

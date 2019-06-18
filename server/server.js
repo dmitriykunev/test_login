@@ -16,137 +16,198 @@ var jsonParser = bodyParser.json();
 //     console.log('db', data);
 // });
 
-const {NewUserBase: NewUserBase} = require('./models');
-NewUserBase.update({
-    password: '654321'
-}, {
-    where: {
-        token: 'otsotzlinl',
-    }
-}).then((data) => {
-    console.log('db', data);
-});
+// const {NewUserBase: NewUserBase} = require('./models');
+// NewUserBase.findAll({
+//     raw: true,
+//     where: {
+//         token: 't4eohwqpde'
+//     }
+// }).then((data) => {
+//     // console.log('db', data);
+//     console.log('The data representation');
+//     const [ result ] = data;
+//     console.log(result)
+// });
 
-let userList = [
-    {
-        userName: 'dmitriy',
-        passwd: '123456',
-        token: 'otsotzlinl',
-        email: 'dmitriy@gmail.com',
-        info: 'This is my Profile information'
-    },
-    {
-        userName: 'B@rt',
-        passwd: '123456',
-        token: '89gwrzedtyi',
-        email: 'bArt@gmail.com',
-        info: 'This is my Profile information'
-    }
-];
+// let userList = [
+//     {
+//         userName: 'dmitriy',
+//         passwd: '123456',
+//         token: 'otsotzlinl',
+//         email: 'dmitriy@gmail.com',
+//         info: 'This is my Profile information'
+//     },
+//     {
+//         userName: 'B@rt',
+//         passwd: '123456',
+//         token: '89gwrzedtyi',
+//         email: 'bArt@gmail.com',
+//         info: 'This is my Profile information'
+//     }
+// ];
 
-function userLookUp(name, passwd) {
+function userLookUp (name, passwd) {
     console.log('Searching a user');
-    // const {NewUserBase: NewUserBase} = require('./models');
-    // NewUserBase.findAll({
-    //     where: {
-    //         userName: name,
-    //         password: passwd
-    //     }
-    // }).then((data) => {
-    //     console.log('db', data);
-    // });
-
-
-    for (let i = 0; i < userList.length; i++) {
-        if (userList[i].userName === name) {
-            if (userList[i].passwd === passwd) {
-                return userList[i]
-            }
+    const {NewUserBase: NewUserBase} = require('./models');
+    return NewUserBase.findAll({
+        raw: true,
+        where: {
+            userName: name,
+            password: passwd
         }
-    }
-    return false
-}
+    });
+    // return result;
+
+    // for (let i = 0; i < userList.length; i++) {
+    //     if (userList[i].userName === name) {
+    //         if (userList[i].passwd === passwd) {
+    //             return userList[i]
+    //         }
+    //     }
+    // }
+    // return false
+};
 
 function findTokenByUser(user) {
     // return userList.find(( userFromCollect) => userFromCollect.userName === user).token;
-    console.log('User Found checking token...');
-    for (let i = 0; i < userList.length; i++) {
-        if (userList[i].userName === user) {
-            return userList[i].token
+
+    const {NewUserBase: NewUserBase} = require('./models');
+    NewUserBase.findAll({
+        raw: true}, {
+        where: {
+            userName: user
         }
-    }
+    }).then((data) => {
+        const [ result ] = data;
+        return result;
+    });
+
+    // console.log('User Found checking token...');
+    // for (let i = 0; i < userList.length; i++) {
+    //     if (userList[i].userName === user) {
+    //         return userList[i].token
+    //     }
+    // }
 }
 
 function removeUserByToken(data) {
-    for (let i = 0; i < userList.length; i++) {
-        if (userList[i].token === data.token) {
-            const removed = userList.splice(i, 1);
-            return true
+    const {NewUserBase: NewUserBase} = require('./models');
+    NewUserBase.destroy({
+        raw: true,
+        where: {
+            token: data.token
         }
-    }
-    return false
+    }).then((data) => {
+        const [ result ] = data;
+        return result;
+    });
+
+    // for (let i = 0; i < userList.length; i++) {
+    //     if (userList[i].token === data.token) {
+    //         const removed = userList.splice(i, 1);
+    //         return true
+    //     }
+    // }
+    // return false
 };
 
 function checkOutToken(data) {
     console.log('Token check out started ...');
     const {token} = data;
-    // return userList.find( item => item.token === token);
-    for (let i = 0; i < userList.length; i++) {
-        if (userList[i].token === token) {
-            console.log('Token check out finished...');
-            return {
-                userName: userList[i].userName,
-                passwd: userList[i].passwd,
-                email: userList[i].email,
-                token: userList[i].token,
-                info: userList[i].info
-            };
+    console.log(token);
+    const {NewUserBase: NewUserBase} = require('./models');
+    NewUserBase.findAll({
+        raw: true,
+        where: {
+            token: token
         }
-        console.log('Token check out failed...');
-        return false;
-    }
+    });
+
+    // // return userList.find( item => item.token === token);
+    // for (let i = 0; i < userList.length; i++) {
+    //     if (userList[i].token === token) {
+            console.log('Token check out finished...');
+    //         return {
+    //             userName: userList[i].userName,
+    //             passwd: userList[i].passwd,
+    //             email: userList[i].email,
+    //             token: userList[i].token,
+    //             info: userList[i].info
+    //         };
+    //     }
+    //     console.log('Token check out failed...');
+    //     return false;
+    // }
 }
 
 function modifyUser(payload) {
     console.log('Modification started...');
-    for (let i = 0; i < userList.length; i += 1) {
-        if (userList[i].token === payload.token) {
-            console.log('Token Matched... Start Changing the DB...');
-            const newUserList = userList.splice(i, 1, payload);
-            console.log(newUserList);
-            console.log(userList);
-            // userList = newUserList;
-            console.log('Modification Done!');
-            return userList[i]
+
+    const {NewUserBase: NewUserBase} = require('./models');
+    NewUserBase.update({
+        raw: true,
+        userName: payload.userName,
+        password: payload.passwd,
+        email: payload.email,
+        info: payload.info
+    }, {
+        where: {
+            token: payload.token
         }
-    }
-    return console.log('Modification failed...')
+    }).then((data) => {
+        const [ result ] = data;
+        return result;
+    });
+
+    // for (let i = 0; i < userList.length; i += 1) {
+    //     if (userList[i].token === payload.token) {
+    //         console.log('Token Matched... Start Changing the DB...');
+    //         const newUserList = userList.splice(i, 1, payload);
+    //         console.log(newUserList);
+    //         console.log(userList);
+    //         // userList = newUserList;
+    //         console.log('Modification Done!');
+    //         return userList[i]
+    //     }
+    // }
+    // return console.log('Modification failed...')
 }
 
-function userRegister(name, passwd, token, email) {
-    console.log('Registering started');
-    if (!userLookUp(name, passwd)) {
-        userList.push({
+function userRegister(name, passwd, token, email, info) {
+    console.log('Registration started');
+    const {NewUserBase: NewUserBase} = require('./models');
+    return NewUserBase.create({
+            raw: true,
             userName: name,
-            passwd: passwd,
+            password: passwd,
             token: token,
-            email: email
-        });
-        return true;
-    } else {
-        return false
-    }
+            email: email,
+            info: info
+    })
+
+    // if (!userLookUp(name, passwd)) {
+    //     userList.push({
+    //         userName: name,
+    //         passwd: passwd,
+    //         token: token,
+    //         email: email
+    //     });
+    //     return true;
+    // } else {
+    //     return false
+    // }
 
 }
 
 app.use(cors());
 
-app.post('/login', jsonParser, function (req, res) {
+app.post('/login', jsonParser,async function (req, res) {
     if (req.body) {
-        const user = userLookUp(req.body.userName, req.body.password);
+        const user = await userLookUp(req.body.userName, req.body.password);
         console.log(user);
         if (user) {
-            res.send(user);
+            const [data] = user;
+            res.send(data);
             console.log('Query finished')
         }
     } else {
@@ -154,22 +215,21 @@ app.post('/login', jsonParser, function (req, res) {
     }
 });
 app.use(jsonParser);
-app.post('/token', function (req, res) {
+app.post('/token', async function (req, res) {
     console.log(req.body);
-    const isToken = checkOutToken(req.body);
+    const isToken = await checkOutToken(req.body);
     console.log(isToken);
     if (isToken) {
         console.log(isToken);
-        res.send({
+        res.statusCode(200).send({
             token: isToken.token,
             userName: isToken.userName,
             email: isToken.email,
             passwd: isToken.passwd,
             info: isToken.info
-        });
-        res.statusCode = 200;
+        })
     } else {
-        res.statusCode(400).send(false);
+        // res.statusCode(400).send(false);
         // res.json({
         //
         // })
@@ -190,11 +250,12 @@ app.put('/modify', function (req, res) {
     res.send(data);
     res.statusCode = 200
 });
-app.put('/register', function (req, res) {
+app.put('/register', async function (req, res) {
     const {userName, password, token, email} = req.body;
     console.log(req.body);
     if (req.body) {
-        if (userRegister(userName, password, token, email)) {
+        if ( await userRegister(userName, password, token, email)) {
+            console.log(userName);
             res.send({
                 userName,
                 passwd: password,
