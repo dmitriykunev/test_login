@@ -4,47 +4,10 @@ var cors = require('cors');
 var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 
-// const {NewUserBase: NewUserBase} = require('./models');
-// // console.log('db', Object.keys(db));
-// NewUserBase.create({
-//     userName: 'dmitriy',
-//     password: '123456',
-//     token: 'otsotzlinl',
-//     email: 'dmitriy@gmail.com',
-//     info: 'This is my DB Profile information'
-// }).then((data) => {
-//     console.log('db', data);
-// });
 
-// const {NewUserBase: NewUserBase} = require('./models');
-// NewUserBase.findAll({
-//     raw: true,
-//     where: {
-//         token: 't4eohwqpde'
-//     }
-// }).then((data) => {
-//     // console.log('db', data);
-//     console.log('The data representation');
-//     const [ result ] = data;
-//     console.log(result)
-// });
+const {NewUserBase: NewUserBase} = require('./models');
+console.log(NewUserBase.);
 
-// let userList = [
-//     {
-//         userName: 'dmitriy',
-//         passwd: '123456',
-//         token: 'otsotzlinl',
-//         email: 'dmitriy@gmail.com',
-//         info: 'This is my Profile information'
-//     },
-//     {
-//         userName: 'B@rt',
-//         passwd: '123456',
-//         token: '89gwrzedtyi',
-//         email: 'bArt@gmail.com',
-//         info: 'This is my Profile information'
-//     }
-// ];
 
 function userLookUp (name, passwd) {
     console.log('Searching a user');
@@ -56,38 +19,13 @@ function userLookUp (name, passwd) {
             password: passwd
         }
     });
-    // return result;
-
-    // for (let i = 0; i < userList.length; i++) {
-    //     if (userList[i].userName === name) {
-    //         if (userList[i].passwd === passwd) {
-    //             return userList[i]
-    //         }
-    //     }
-    // }
-    // return false
 };
 
-function findTokenByUser(user) {
-    // return userList.find(( userFromCollect) => userFromCollect.userName === user).token;
-
+function getAllUsers() {
     const {NewUserBase: NewUserBase} = require('./models');
     NewUserBase.findAll({
-        raw: true}, {
-        where: {
-            userName: user
-        }
-    }).then((data) => {
-        const [ result ] = data;
-        return result;
-    });
-
-    // console.log('User Found checking token...');
-    // for (let i = 0; i < userList.length; i++) {
-    //     if (userList[i].userName === user) {
-    //         return userList[i].token
-    //     }
-    // }
+        raw: true,
+    })
 }
 
 function removeUserByToken(data) {
@@ -101,76 +39,41 @@ function removeUserByToken(data) {
         const [ result ] = data;
         return result;
     });
-
-    // for (let i = 0; i < userList.length; i++) {
-    //     if (userList[i].token === data.token) {
-    //         const removed = userList.splice(i, 1);
-    //         return true
-    //     }
-    // }
-    // return false
 };
 
 function checkOutToken(data) {
     console.log('Token check out started ...');
-    const {token} = data;
-    console.log(token);
+    // const {token} = data;
+    console.log(data);
     const {NewUserBase: NewUserBase} = require('./models');
-    NewUserBase.findAll({
+    return NewUserBase.findAll({
         raw: true,
+        where: {
+            token: data.token
+        }
+    });
+}
+
+function getUserByToken(token){
+    return NewUserBase.findOne({
         where: {
             token: token
         }
     });
-
-    // // return userList.find( item => item.token === token);
-    // for (let i = 0; i < userList.length; i++) {
-    //     if (userList[i].token === token) {
-            console.log('Token check out finished...');
-    //         return {
-    //             userName: userList[i].userName,
-    //             passwd: userList[i].passwd,
-    //             email: userList[i].email,
-    //             token: userList[i].token,
-    //             info: userList[i].info
-    //         };
-    //     }
-    //     console.log('Token check out failed...');
-    //     return false;
-    // }
 }
 
-function modifyUser(payload) {
+function modifyUser(user, payload) {
     console.log('Modification started...');
-
+    console.log(payload);
     const {NewUserBase: NewUserBase} = require('./models');
-    NewUserBase.update({
+
+    return user.update({
         raw: true,
         userName: payload.userName,
         password: payload.passwd,
         email: payload.email,
         info: payload.info
-    }, {
-        where: {
-            token: payload.token
-        }
-    }).then((data) => {
-        const [ result ] = data;
-        return result;
-    });
-
-    // for (let i = 0; i < userList.length; i += 1) {
-    //     if (userList[i].token === payload.token) {
-    //         console.log('Token Matched... Start Changing the DB...');
-    //         const newUserList = userList.splice(i, 1, payload);
-    //         console.log(newUserList);
-    //         console.log(userList);
-    //         // userList = newUserList;
-    //         console.log('Modification Done!');
-    //         return userList[i]
-    //     }
-    // }
-    // return console.log('Modification failed...')
+    })
 }
 
 function userRegister(name, passwd, token, email, info) {
@@ -184,19 +87,6 @@ function userRegister(name, passwd, token, email, info) {
             email: email,
             info: info
     })
-
-    // if (!userLookUp(name, passwd)) {
-    //     userList.push({
-    //         userName: name,
-    //         passwd: passwd,
-    //         token: token,
-    //         email: email
-    //     });
-    //     return true;
-    // } else {
-    //     return false
-    // }
-
 }
 
 app.use(cors());
@@ -215,37 +105,30 @@ app.post('/login', jsonParser,async function (req, res) {
     }
 });
 app.use(jsonParser);
-app.post('/token', async function (req, res) {
+app.post('/token', jsonParser, async function (req, res) {
     console.log(req.body);
-    const isToken = await checkOutToken(req.body);
+    const [ isToken ] = await checkOutToken(req.body);
+    console.log('Token checkout finished...');
     console.log(isToken);
     if (isToken) {
-        console.log(isToken);
-        res.statusCode(200).send({
-            token: isToken.token,
-            userName: isToken.userName,
-            email: isToken.email,
-            passwd: isToken.passwd,
-            info: isToken.info
-        })
+        res.statusCode = 200;
+        res.send(isToken);
     } else {
-        // res.statusCode(400).send(false);
-        // res.json({
-        //
-        // })
         res.statusCode = 400;
     }
 });
 
-app.get('/getUsers', function (req, res) {
-    const users = userList;
+app.get('/getUsers', async function (req, res) {
+    const users = await getAllUsers();
     res.send(users);
     res.statusCode = 200
 });
 
-app.put('/modify', function (req, res) {
+app.put('/modify', async function (req, res) {
     console.log(req.body);
-    const data = modifyUser(req.body);
+    const user = await getUserByToken(req.body.token);
+    console.log('User returns' + user);
+    const data = await modifyUser(user, req.body);
     console.log(data);
     res.send(data);
     res.statusCode = 200

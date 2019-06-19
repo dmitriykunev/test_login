@@ -24,7 +24,7 @@ function profileReducer(state = initialState, action) {
             return {
                 ...state, userName: action.payload.userName,
                 email: action.payload.email,
-                password: action.payload.passwd,
+                password: action.payload.password,
                 token: action.payload.token,
                 info: action.payload.info
             };
@@ -59,7 +59,7 @@ function profileReducer(state = initialState, action) {
         case TOKEN_CHECK_SUCCESS:
             return {...state,
                 userName: action.payload.userName,
-                password: action.payload.passwd,
+                password: action.payload.password,
                 email: action.payload.email,
                 token: action.payload.token,
                 info: action.payload.info

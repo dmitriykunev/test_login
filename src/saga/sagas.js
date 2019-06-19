@@ -20,9 +20,9 @@ function* removeUserAsync(action) {
 }
 
 function* changeProfileAsync(action) {
-    // console.log('action', action);
+    console.log('action', action);
         const { data } = yield call(DataTransaction.modify, action.data);
-        console.log('Saga request finished');
+        console.log('Saga request finished' + data);
         if(data) {
             console.log(data);
         yield put(changeProfileSuccess(data));
@@ -33,19 +33,20 @@ function* changeProfileAsync(action) {
 }
 
 function* tokenCheckAsync(action) {
-    console.log(action.token);
-    const data = yield call(DataTransaction.token, {token: action.token});
-    console.log(data);
-    if(data) {
-        yield put(tokenCheckSuccess(data.data));
+    // console.log(action.token);
+    const payload = yield call(DataTransaction.token, {token: action.token});
+    console.log(payload.data);
+    if(payload.data) {
+        yield put(tokenCheckSuccess(payload.data));
     } else {
-        yield put(tokenCheckFail(data));
+        yield put(tokenCheckFail(payload.data));
     }
 }
 
 function* populateUsersAsync() {
     console.log('Saga works');
     const data = yield call(DataTransaction.getUsers);
+    console.log(data);
     const users = data.data;
     if(users) {
         yield put(populateUsersSuccess(users));

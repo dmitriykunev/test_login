@@ -66,9 +66,11 @@ class Login extends Component {
     };
 
     updateLocalStorage = (data) => {
+        data =
         // localStorage.setItem('userName', data.userName);
         localStorage.setItem('token', data.token);
     };
+
 
     handleRedirect = (event) => {
         event.preventDefault();
