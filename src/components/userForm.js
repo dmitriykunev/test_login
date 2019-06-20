@@ -54,33 +54,18 @@ class UserForm extends Component {
 
 
     handleChangeUserName = event => {
-        // const data = event.target.value;
-        // this.props.dispatch({
-        //     type: 'CHANGE_PROFILE_NAME',
-        //     data
-        // });
         this.setState({
             userName: event.target.value,
         });
     };
 
     handleChangePassword = event => {
-        // const data = event.target.value;
-        // this.props.dispatch({
-        //     type: 'CHANGE_PROFILE_PASSWORD',
-        //     data
-        // });
         this.setState({
             passwd: event.target.value,
         });
     };
 
     handleChangeEmail = event => {
-        // const data = event.target.value;
-        // this.props.dispatch({
-        //     type: 'CHANGE_PROFILE_EMAIL',
-        //     data
-        // });
         this.setState({
             email: event.target.value,
         });

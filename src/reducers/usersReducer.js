@@ -3,6 +3,8 @@ import {
     ADD_USER_FAIL,
     REMOVE_USER_SUCCESS,
     REMOVE_USER_FAIL,
+    CHANGE_USER_SUCCESS,
+    CHANGE_USER_FAIL,
     POPULATE_USERS_SUCCESS,
     POPULATE_USERS_FAIL
 } from '../constants/index';
@@ -21,6 +23,14 @@ function usersReducer(state = initialState, action) {
         case ADD_USER_SUCCESS:
             return [...state, action.data];
         case ADD_USER_FAIL:
+            return state;
+        case CHANGE_USER_SUCCESS:
+            for (let i = 0; i < state.length; i++) {
+                if (state[i].token === action.data.token) {
+                    const removed = state.splice(i, 1, action.data);
+                    return state;
+                }}
+        case CHANGE_USER_FAIL:
             return state;
         case POPULATE_USERS_SUCCESS: // NOT FINISHED
                 const newState = action.payload.map(function (elem) {

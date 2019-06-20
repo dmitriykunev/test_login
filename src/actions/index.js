@@ -2,6 +2,9 @@ import {
     CHANGE_PROFILE,
     CHANGE_PROFILE_SUCCESS,
     CHANGE_PROFILE_FAIL,
+    CHANGE_USER,
+    CHANGE_USER_SUCCESS,
+    CHANGE_USER_FAIL,
     ADD_USER,
     POPULATE_PROFILE,
     POPULATE_PROFILE_SUCCESS,
@@ -53,6 +56,18 @@ export function removeUserFail(payload) {
 
 export function removeUserSuccess(payload) {
     return {type: REMOVE_USER_SUCCESS, payload}
+};
+
+export function changeUser(payload) {
+    return {type: CHANGE_USER, payload}
+};
+
+export function changeUserSuccess(payload) {
+    return {type: CHANGE_USER_SUCCESS, payload}
+};
+
+export function changeUserFail(payload) {
+    return {type: CHANGE_USER_FAIL, payload}
 };
 
 export function changeProfile(payload) {

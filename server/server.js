@@ -5,8 +5,19 @@ var bodyParser = require('body-parser');
 var jsonParser = bodyParser.json();
 
 
-const {NewUserBase: NewUserBase} = require('./models');
-console.log(NewUserBase.);
+// const {NewUserBase: NewUserBase} = require('./models');
+// // const Op = Sequelize.Op;
+// return NewUserBase.findAll({
+//     raw: true,
+//     // where: {
+//     //     id: {
+//     //         $gt: 0,
+//     //     }
+//     // }
+// }).then((data) => {
+//     // const [ result ] = data;
+//     console.log(data);
+// });
 
 
 function userLookUp (name, passwd) {
@@ -23,7 +34,7 @@ function userLookUp (name, passwd) {
 
 function getAllUsers() {
     const {NewUserBase: NewUserBase} = require('./models');
-    NewUserBase.findAll({
+    return NewUserBase.findAll({
         raw: true,
     })
 }
@@ -35,10 +46,7 @@ function removeUserByToken(data) {
         where: {
             token: data.token
         }
-    }).then((data) => {
-        const [ result ] = data;
-        return result;
-    });
+    })
 };
 
 function checkOutToken(data) {
@@ -105,7 +113,7 @@ app.post('/login', jsonParser,async function (req, res) {
     }
 });
 app.use(jsonParser);
-app.post('/token', jsonParser, async function (req, res) {
+app.post('/token', async function (req, res) {
     console.log(req.body);
     const [ isToken ] = await checkOutToken(req.body);
     console.log('Token checkout finished...');
@@ -151,14 +159,14 @@ app.put('/register', async function (req, res) {
     }
 });
 
-app.post('/remove', function (req, res) {
+app.post('/remove', async function (req, res) {
     console.log(req.body);
-    if (req.body) {
-        if (removeUserByToken(req.body)) {
-            res.end(userList);
+    const removed =  await removeUserByToken(req.body);
+    if (removed) {
+            res.end(removed);
             res.statusCode = 200
 
-        }
+        } else {
         res.writeHead(res.statusCode = 400);
         res.end('Something wend wrong ... User was not removed!');
     }
