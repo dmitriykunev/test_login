@@ -1,6 +1,7 @@
 import {
-    ADD_USER_SUCCESS,
-    ADD_USER_FAIL,
+    LOGOUT,
+    SIGNUP_USER_SUCCESS,
+    SIGNUP_USER_FAIL,
     CHANGE_PROFILE_SUCCESS,
     CHANGE_PROFILE_FAIL,
     POPULATE_PROFILE_SUCCESS,
@@ -43,7 +44,7 @@ function profileReducer(state = initialState, action) {
             return {
                 ...state, error: 'Error happened while processing profile info...'
             };
-        case ADD_USER_SUCCESS:
+        case SIGNUP_USER_SUCCESS:
             return {
                 ...state,
                 userName: action.data.userName,
@@ -52,7 +53,7 @@ function profileReducer(state = initialState, action) {
                 token: action.data.token,
                 info: action.data.info
             };
-        case ADD_USER_FAIL:
+        case SIGNUP_USER_FAIL:
             return {
                 ...state, error: 'Error happened while processing New User Data...'
             };
@@ -68,6 +69,8 @@ function profileReducer(state = initialState, action) {
             return {
                 ...state, error: 'Error happened while processing token...'
             };
+        case LOGOUT:
+            return initialState;
         default:
             return state;
     }

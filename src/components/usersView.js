@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import '../index.css';
 import NavBar from "./navbar";
 import UserForm from './userForm';
@@ -18,10 +18,12 @@ const mapStateToProps = state => {
 
 class UsersView extends Component {
 
-    componentDidMount() {
-        if (!this.props.token) {
-            this.props.history.push('/login')
-        }
+    componentWillMount() {
+        const token = localStorage.getItem('token');
+        this.props.dispatch({
+            type: 'TOKEN_CHECK',
+            token: token
+        });
     };
 
 
@@ -32,21 +34,29 @@ class UsersView extends Component {
                 passwd={this.props.passwd}
                 email={this.props.email}
                 token={this.props.token}
+                info={this.props.info}
             />
         </div>
     };
 
     render() {
+        if (!this.props.token) {
+            this.props.history.push('/login')
+        }
         return (
-            <div>
-                <NavBar/>
-                {
-                this.renderUser(this.props)
-                }
-            </div>
+            <Fragment>
+                <div className={"navbar"}>
+                    <NavBar/>
+                </div>
+                <div>
+                    {
+                        this.renderUser(this.props)
+                    }
+                </div>
+            </Fragment>
 
         )
     };
 }
 
-export default connect(mapStateToProps) (UsersView);
+export default connect(mapStateToProps)(UsersView);

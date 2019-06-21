@@ -3,19 +3,33 @@ import {NavLink} from "react-router-dom";
 import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import {connect} from "react-redux";
+
+const mapStateToProps = state => {
+    return {
+        userName: state.profileReducer.userName,
+        passwd: state.profileReducer.password,
+        token: state.profileReducer.token,
+        email: state.profileReducer.email,
+        info: state.profileReducer.info,
+        error: state.profileReducer.error
+    }
+};
 
 class NavBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userName: this.props.name,
-            loggedIn: this.props.loggedIn,
+            userName: this.props.userName,
             anchorEl: null
         };
     }
 
     signOut = () => {
         localStorage.clear();
+        this.props.dispatch({
+            type: 'LOGOUT'
+        });
     };
 
     handleClick = event => {
@@ -60,5 +74,4 @@ class NavBar extends Component {
     );
     }
     }
-
-    export default NavBar;
+    export default connect(mapStateToProps) (NavBar);

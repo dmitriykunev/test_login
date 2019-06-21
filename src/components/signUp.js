@@ -21,6 +21,7 @@ class SignUp extends Component {
             userName: '',
             passwd: '',
             email: '',
+            info: 'Personal Information',
             match: false
         };
     };
@@ -58,7 +59,7 @@ class SignUp extends Component {
             token: data.token
         });
         this.props.dispatch({
-            type: 'ADD_USER_SUCCESS',
+            type: 'SIGNUP_USER_SUCCESS',
             data
         });
         this.props.dispatch({

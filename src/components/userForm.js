@@ -71,6 +71,12 @@ class UserForm extends Component {
         });
     };
 
+    handleChangeInfo = event => {
+        this.setState({
+            info: event.target.value,
+        });
+    };
+
     handleSaveUser = () => {
         const data = {
             userName: this.state.userName,
@@ -115,6 +121,15 @@ class UserForm extends Component {
                             className={classes.textField}
                             value={this.state.email}
                             onChange={this.handleChangeEmail}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                        <TextField
+                            id="outlined-name"
+                            label="Personal Info"
+                            className={classes.textField}
+                            value={this.state.info}
+                            onChange={this.handleChangeInfo}
                             margin="normal"
                             variant="outlined"
                         />

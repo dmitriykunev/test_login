@@ -32,16 +32,15 @@ const styles = theme => ({
     },
 });
 
-class UsersForm extends Component {
+class AddUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            userName: this.props.userName,
-            password: this.props.password,
-            token: this.props.token,
-            email: this.props.email,
-            info: this.props.info,
-            error: this.props.error
+            userName: 'Your Login',
+            password: 'Password here',
+            token: '',
+            email: 'Your E-mail',
+            info: 'Personal Information'
         };
     }
 
@@ -70,28 +69,16 @@ class UsersForm extends Component {
         });
     };
 
-    handleSaveUser = () => {
+    handleAddUser = () => {
         const data = {
             userName: this.state.userName,
-            token: this.props.token,
+            token: Math.random().toString(36).substr(2, 25),
             password: this.state.password,
             email: this.state.email,
-            info: this.state.info };
+            info: this.state.info
+        };
         this.props.dispatch({
-            type: 'CHANGE_USER',
-            data
-        });
-    };
-
-    handleRemoveUser = () => {
-        const data = {
-            userName: this.state.userName,
-            token: this.props.token,
-            password: this.state.password,
-            email: this.state.email,
-            info: this.state.info };
-        this.props.dispatch({
-            type: 'REMOVE_USER',
+            type: 'ADD_USER',
             data
         });
     };
@@ -139,11 +126,8 @@ class UsersForm extends Component {
                             margin="normal"
                             variant="outlined"
                         />
-                        <Button variant="outlined" color="primary" className={classes.button} onClick={this.handleSaveUser}>
-                            Save
-                        </Button>
-                        <Button variant="outlined" color="primary" className={classes.button} onClick={this.handleRemoveUser}>
-                            Remove
+                        <Button variant="outlined" color="primary" className={classes.button} onClick={this.handleAddUser}>
+                            ADD USER
                         </Button>
                     </form>
                     <br />
@@ -155,4 +139,4 @@ class UsersForm extends Component {
     };
 }
 
-export default withStyles(styles)(connect(mapStateToProps) (UsersForm));
+export default withStyles(styles)(connect(mapStateToProps) (AddUser));

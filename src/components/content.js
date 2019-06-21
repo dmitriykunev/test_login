@@ -18,18 +18,25 @@ const mapStateToProps = state => {
 class Content extends Component {
 componentDidMount() {
     const token = localStorage.getItem('token');
-    if(token) {
+    if(this.props.token) {
+        localStorage.setItem('token', this.props.token);
+    } else if (token) {
         console.log(token);
         this.props.dispatch({
             type: 'TOKEN_CHECK',
             token: token
         })
-    } else {this.props.history.push('/login')};
+    } else {
+        this.props.history.push('/login')
+    };
 }
 
     render() {
          return (
-            <Fragment><NavBar />
+            <Fragment>
+                <div className={"navbar"}>
+                <NavBar />
+                </div>
             <div>
                 <h1>Custom Title</h1>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore

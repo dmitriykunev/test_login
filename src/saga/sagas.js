@@ -8,7 +8,9 @@ import {
     tokenCheckSuccess,
     tokenCheckFail,
     populateUsersSuccess,
-    populateUsersFail
+    populateUsersFail,
+    addUserSuccess,
+    addUserFail
 } from "../actions";
 
 function* removeUserAsync(action) {
@@ -60,14 +62,25 @@ function* populateUsersAsync() {
 function* changeUserAsync(action) {
     console.log('Change user saga start');
     const { data } = yield call(DataTransaction.modify, action.data);
-    console.log('Saga request finished' + data);
+    console.log('Saga request finished');
+    console.log(data);
     if(data) {
-        console.log(data);
         yield put(changeUserSuccess(data));
     } else {
         yield put(changeUserFail(data));
     }
+}
 
+function* addUserAsync(action) {
+    console.log('Add user saga start');
+    const { data } = yield call(DataTransaction.register, action.data);
+    console.log('Saga request finished');
+    console.log(data);
+    if(data) {
+        yield put(addUserSuccess(data));
+    } else {
+        yield put(addUserFail(data));
+    }
 }
 
 function* changeProfile() {
@@ -90,13 +103,18 @@ function* changeUser() {
     yield takeEvery('CHANGE_USER', changeUserAsync);
 }
 
+function* addUser() {
+    yield takeEvery('ADD_USER', addUserAsync);
+}
+
 function* rootSaga() {
     yield all([
         removeUser(),
         changeProfile(),
         tokenCheck(),
         populateUsers(),
-        changeUser()
+        changeUser(),
+        addUser()
     ]);
 }
 

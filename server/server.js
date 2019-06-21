@@ -42,7 +42,7 @@ function getAllUsers() {
 function removeUserByToken(data) {
     const {NewUserBase: NewUserBase} = require('./models');
     NewUserBase.destroy({
-        raw: true,
+        // raw: true,
         where: {
             token: data.token
         }
@@ -63,6 +63,7 @@ function checkOutToken(data) {
 }
 
 function getUserByToken(token){
+    const {NewUserBase: NewUserBase} = require('./models');
     return NewUserBase.findOne({
         where: {
             token: token
@@ -78,7 +79,7 @@ function modifyUser(user, payload) {
     return user.update({
         raw: true,
         userName: payload.userName,
-        password: payload.passwd,
+        password: payload.password,
         email: payload.email,
         info: payload.info
     })
@@ -96,10 +97,10 @@ function userRegister(name, passwd, token, email, info) {
             info: info
     })
 }
-
+app.use(jsonParser);
 app.use(cors());
 
-app.post('/login', jsonParser,async function (req, res) {
+app.post('/login', async function (req, res) {
     if (req.body) {
         const user = await userLookUp(req.body.userName, req.body.password);
         console.log(user);
@@ -112,7 +113,7 @@ app.post('/login', jsonParser,async function (req, res) {
         res.statusCode = 400
     }
 });
-app.use(jsonParser);
+
 app.post('/token', async function (req, res) {
     console.log(req.body);
     const [ isToken ] = await checkOutToken(req.body);
@@ -142,26 +143,22 @@ app.put('/modify', async function (req, res) {
     res.statusCode = 200
 });
 app.put('/register', async function (req, res) {
-    const {userName, password, token, email} = req.body;
+    const {userName, password, token, email, info} = req.body;
     console.log(req.body);
     if (req.body) {
-        if ( await userRegister(userName, password, token, email)) {
-            console.log(userName);
-            res.send({
-                userName,
-                passwd: password,
-                email,
-                token
-            });
+        const data = await userRegister(userName, password, token, email, info);
+        if (data) {
+            console.log(data);
+            res.send(data);
         }
-        res.writeHead(res.statusCode = 400);
-        res.send('This user is already registered, Choose another name!');
-    }
+    } else {
+    res.writeHead(res.statusCode = 400);
+    res.send('This user is already registered, Choose another name!');}
 });
 
 app.post('/remove', async function (req, res) {
-    console.log(req.body);
     const removed =  await removeUserByToken(req.body);
+    console.log(removed);
     if (removed) {
             res.end(removed);
             res.statusCode = 200

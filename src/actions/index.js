@@ -6,6 +6,8 @@ import {
     CHANGE_USER_SUCCESS,
     CHANGE_USER_FAIL,
     ADD_USER,
+    ADD_USER_SUCCESS,
+    ADD_USER_FAIL,
     POPULATE_PROFILE,
     POPULATE_PROFILE_SUCCESS,
     POPULATE_PROFILE_FAIL,
@@ -18,9 +20,14 @@ import {
     TOKEN_CHECK_FAIL,
     POPULATE_USERS_SUCCESS,
     POPULATE_USERS_FAIL,
-    ADD_USER_SUCCESS,
-    ADD_USER_FAIL
+    SIGNUP_USER_SUCCESS,
+    SIGNUP_USER_FAIL,
+    LOGOUT
 } from '../constants/index';
+
+export function logout() {
+    return {type: LOGOUT}
+};
 
 export function addUser(payload) {
     return {type: ADD_USER, payload}

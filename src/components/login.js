@@ -24,6 +24,16 @@ class Login extends Component {
         };
     };
 
+    componentDidMount() {
+        const token = localStorage.getItem('token');
+        if(token) {
+            this.props.history.push('/content')
+        }
+        if (this.props.token) {
+            this.props.history.push('/content')
+        }
+    }
+
     handleChangeUserName = (event) => {
         this.setState({
             userName: event.target.value
@@ -46,7 +56,9 @@ class Login extends Component {
         this.setState( {
             userName: data.userName,
             passwd: data.passwd,
-            token: data.token
+            token: data.token,
+            email: data.email,
+            info: data.info
         });
         if(data) {
             console.log(data);
@@ -66,8 +78,7 @@ class Login extends Component {
     };
 
     updateLocalStorage = (data) => {
-        data =
-        // localStorage.setItem('userName', data.userName);
+        localStorage.setItem('userName', data.userName);
         localStorage.setItem('token', data.token);
     };
 

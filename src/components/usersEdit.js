@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import '../index.css';
 import NavBar from "./navbar";
 import UsersForm from "./usersForm";
-import { connect } from 'react-redux';
+import AddUser from "./addUser";
+import {connect} from 'react-redux';
 
 
 const mapStateToProps = state => {
@@ -16,45 +17,50 @@ class UsersEdit extends Component {
 
     componentWillMount() {
         const token = localStorage.getItem('token');
-        const data = {token: token};
+        this.props.dispatch({
+            type: 'TOKEN_CHECK',
+            token: token
+        });
+        // const data = {token: token};
         this.props.dispatch({
             type: 'POPULATE_USERS'
         });
-           if (!token) {
-                this.props.history.push('/login')
-            } else {
-               this.props.dispatch({
-                   type: 'TOKEN_CHECK',
-                   token: data
-               });
-           }
+        if (!token) {
+            this.props.history.push('/login')
+        }
     };
 
     handleRender = (list) => {
         console.log(list);
-        return list.map(function(elem) {
+        return list.map(function (elem) {
             return <div key={elem.token}>
                 <UsersForm
                     userName={elem.userName}
                     password={elem.password}
                     email={elem.email}
                     token={elem.token}
+                    info={elem.info}
                 />
             </div>
         })
     };
 
     render() {
-            return (
-                <div>
-                <NavBar />
-        {
-            this.handleRender(this.props.users)
-        }
+        return (
+            <Fragment>
+                <div className={"navbar"}>
+                    <NavBar/>
                 </div>
-            )
+                <div>
+                    {
+                        this.handleRender(this.props.users)
+                    }
+                    <AddUser />
+                </div>
+            </Fragment>
+        )
 
-        };
-    }
+    };
+}
 
-export default connect(mapStateToProps) (UsersEdit);
+export default connect(mapStateToProps)(UsersEdit);

@@ -20,16 +20,18 @@ function usersReducer(state = initialState, action) {
                     return state
                 }
             } return state;
+        case REMOVE_USER_FAIL:
+            return state;
         case ADD_USER_SUCCESS:
             return [...state, action.data];
         case ADD_USER_FAIL:
             return state;
         case CHANGE_USER_SUCCESS:
             for (let i = 0; i < state.length; i++) {
-                if (state[i].token === action.data.token) {
-                    const removed = state.splice(i, 1, action.data);
+                if (state[i].token === action.payload.token) {
+                    const removed = state.splice(i, 1, action.payload);
                     return state;
-                }}
+                }};
         case CHANGE_USER_FAIL:
             return state;
         case POPULATE_USERS_SUCCESS: // NOT FINISHED
