@@ -113,3 +113,11 @@ export function populateProfileFail(payload) {
     return {type: POPULATE_PROFILE_FAIL, payload}
 };
 
+export function signUpUserSuccess(payload) {
+    return {type: SIGNUP_USER_SUCCESS, payload}
+};
+
+export function signUpUserFail(payload) {
+    return {type: SIGNUP_USER_FAIL, payload}
+};
+

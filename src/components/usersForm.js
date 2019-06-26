@@ -94,6 +94,7 @@ class UsersForm extends Component {
             type: 'REMOVE_USER',
             data
         });
+
     };
 
     render() {

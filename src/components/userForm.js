@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 const mapStateToProps = state => {
     return {
         userName: state.profileReducer.userName,
-        passwd: state.profileReducer.password,
+        password: state.profileReducer.password,
         token: state.profileReducer.token,
         email: state.profileReducer.email,
         info: state.profileReducer.info,
@@ -44,7 +44,7 @@ class UserForm extends Component {
         super(props);
         this.state = {
             userName: this.props.userName,
-            passwd: this.props.passwd,
+            password: this.props.password,
             token: this.props.token,
             email: this.props.email,
             info: this.props.info,
@@ -61,7 +61,7 @@ class UserForm extends Component {
 
     handleChangePassword = event => {
         this.setState({
-            passwd: event.target.value,
+            password: event.target.value,
         });
     };
 
@@ -81,7 +81,7 @@ class UserForm extends Component {
         const data = {
             userName: this.state.userName,
             token: this.props.token,
-            passwd: this.state.passwd,
+            password: this.state.password,
             email: this.state.email,
             info: this.state.info };
         this.props.dispatch({
@@ -110,7 +110,7 @@ class UserForm extends Component {
                             id="outlined-name"
                             label="Password"
                             className={classes.textField}
-                            value={this.state.passwd}
+                            value={this.state.password}
                             onChange={this.handleChangePassword}
                             margin="normal"
                             variant="outlined"

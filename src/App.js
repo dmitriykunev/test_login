@@ -30,7 +30,7 @@ class TestLanding extends Component {
         console.log('This is the LOG from Token query', data);
         this.props.dispatch({
             type: 'TOKEN_CHECK',
-            token: data
+            token: data.token
         });
         return data
     };

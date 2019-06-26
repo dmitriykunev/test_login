@@ -41,7 +41,8 @@ function getAllUsers() {
 
 function removeUserByToken(data) {
     const {NewUserBase: NewUserBase} = require('./models');
-    NewUserBase.destroy({
+    console.log(data);
+    return NewUserBase.destroy({
         // raw: true,
         where: {
             token: data.token
@@ -97,6 +98,7 @@ function userRegister(name, passwd, token, email, info) {
             info: info
     })
 }
+
 app.use(jsonParser);
 app.use(cors());
 
@@ -147,6 +149,7 @@ app.put('/register', async function (req, res) {
     console.log(req.body);
     if (req.body) {
         const data = await userRegister(userName, password, token, email, info);
+        console.log(data);
         if (data) {
             console.log(data);
             res.send(data);
@@ -157,15 +160,15 @@ app.put('/register', async function (req, res) {
 });
 
 app.post('/remove', async function (req, res) {
+    console.log('Removing a user');
     const removed =  await removeUserByToken(req.body);
     console.log(removed);
-    if (removed) {
-            res.end(removed);
+    if (removed === 1) {
+            res.send(req.body);
             res.statusCode = 200
-
         } else {
         res.writeHead(res.statusCode = 400);
-        res.end('Something wend wrong ... User was not removed!');
+        res.send('Something wend wrong ... User was not removed!');
     }
 });
 

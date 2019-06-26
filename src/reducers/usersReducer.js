@@ -14,16 +14,19 @@ const initialState = [];
 function usersReducer(state = initialState, action) {
     switch(action.type) {
         case REMOVE_USER_SUCCESS:
-            for (let i = 0; i < state.length; i++) {
-                if (state[i].token === action.data.token) {
-                    const removed = state.splice(i, 1);
-                    return state
-                }
-            } return state;
+            // const removeUserState = state.map(function(elem) {
+            //     if(elem.token !== action.payload.token)
+            //         return elem;
+            // });
+           return [...state.filter((elem) => elem.token !== action.payload.token )];
         case REMOVE_USER_FAIL:
             return state;
         case ADD_USER_SUCCESS:
-            return [...state, action.data];
+            const addNewUserState = state.map(function(elem) {
+                return elem;
+            });
+            addNewUserState.splice(state.length, 0, action.payload);
+            return [...addNewUserState];
         case ADD_USER_FAIL:
             return state;
         case CHANGE_USER_SUCCESS:

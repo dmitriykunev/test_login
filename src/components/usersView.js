@@ -7,7 +7,7 @@ import {connect} from "react-redux";
 const mapStateToProps = state => {
     return {
         userName: state.profileReducer.userName,
-        passwd: state.profileReducer.password,
+        password: state.profileReducer.password,
         token: state.profileReducer.token,
         email: state.profileReducer.email,
         info: state.profileReducer.info,
@@ -31,7 +31,7 @@ class UsersView extends Component {
         return <div key={user.token}>
             <UserForm
                 userName={this.props.userName}
-                passwd={this.props.passwd}
+                passwd={this.props.password}
                 email={this.props.email}
                 token={this.props.token}
                 info={this.props.info}

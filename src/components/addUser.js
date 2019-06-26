@@ -81,6 +81,13 @@ class AddUser extends Component {
             type: 'ADD_USER',
             data
         });
+        this.setState ({
+            userName: 'Your Login',
+            password: 'Password here',
+            token: '',
+            email: 'Your E-mail',
+            info: 'Personal Information'
+        });
     };
 
     render() {

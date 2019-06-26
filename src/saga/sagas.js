@@ -10,16 +10,19 @@ import {
     populateUsersSuccess,
     populateUsersFail,
     addUserSuccess,
-    addUserFail
+    addUserFail,
+    removeUserSuccess,
+    removeUserFail
 } from "../actions";
 
 function* removeUserAsync(action) {
-    console.log(action.data);
-    try {
-    const users = yield call(DataTransaction.remove, action.data);
-    yield put({type: 'REMOVE_USER_SUCCESS', data: users});
-    } catch (e) {
-        yield put({type: 'REMOVE_USER_FAIL', error: e.message});
+    const { data }  = yield call(DataTransaction.remove, action.data);
+    console.log('data', data);
+    // removedUser.then((e)=>{console.log('promise', e)});
+    if(data) {
+    yield put(removeUserSuccess(data));
+    } else {
+        yield put(removeUserFail(data));
     }
 }
 
