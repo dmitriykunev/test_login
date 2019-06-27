@@ -16,20 +16,21 @@ const mapStateToProps = state => {
 };
 
 class Content extends Component {
-componentDidMount() {
-    const token = localStorage.getItem('token');
-    if(this.props.token) {
-        localStorage.setItem('token', this.props.token);
-    } else if (token) {
-        console.log(token);
-        this.props.dispatch({
-            type: 'TOKEN_CHECK',
-            token: token
-        })
-    } else {
-        this.props.history.push('/login')
-    };
-}
+    componentDidMount() {
+        const token = localStorage.getItem('token');
+
+        if(this.props.token) {
+            localStorage.setItem('token', this.props.token);
+        } else if (token) {
+            console.log(token);
+            this.props.dispatch({
+                type: 'TOKEN_CHECK',
+                token: token
+            })
+        } else {
+            this.props.history.push('/login')
+        }
+    }
 
     render() {
          return (

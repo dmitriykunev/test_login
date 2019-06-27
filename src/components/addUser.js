@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
 const mapStateToProps = state => {
-    return state
+    return state;
 };
 
 const styles = theme => ({
@@ -33,17 +33,17 @@ const styles = theme => ({
 });
 
 class AddUser extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            userName: 'Your Login',
-            password: 'Password here',
-            token: '',
-            email: 'Your E-mail',
-            info: 'Personal Information'
-        };
-    }
+    state = {
+        userName: 'Your Login',
+        password: 'Password here',
+        token: '',
+        email: 'Your E-mail',
+        info: 'Personal Information'
+    };
 
+    // constructor(props) {
+    //     super(props);
+    // }
 
     handleChangeUserName = event => {
         this.setState({
@@ -77,10 +77,12 @@ class AddUser extends Component {
             email: this.state.email,
             info: this.state.info
         };
+
         this.props.dispatch({
             type: 'ADD_USER',
             data
         });
+
         this.setState ({
             userName: 'Your Login',
             password: 'Password here',

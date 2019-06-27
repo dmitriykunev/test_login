@@ -91,7 +91,7 @@ class Login extends Component {
     render() {
         return (
             <div>
-            <form className={'form'} onSubmit={this.handleSubmit}>
+            <form className={'LoginForm'} onSubmit={this.handleSubmit}>
                 <h1>Enter your credentials</h1><p/>
                 <h3>Login</h3>
                 <input type={'text'} autoComplete={"on"} placeholder={'Enter your Login'} onChange={this.handleChangeUserName}

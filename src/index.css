@@ -68,6 +68,21 @@ form {
     box-shadow: gray;
 }
 
+.LoginForm {
+    position: center;
+    right: auto;
+    left: auto;
+    top: auto;
+    bottom: 10px;
+    margin: auto;
+    max-width: 600px;
+    padding: 16px;
+    background-color: transparent;
+    border: 1px solid dodgerblue;
+    border-radius: 10px;
+    box-shadow: gray;
+}
+
 FormUser {
     right: 30%;
     left: 30%;
@@ -81,10 +96,11 @@ FormUser {
     box-shadow: gray;
 }
 
-NavLink {
-    text-decoration: none;
-    color: dodgerblue;
-}
+/*NavLink {*/
+/*    text-decoration: none;*/
+/*    color: dodgerblue;*/
+/*    background-color: transparent;*/
+/*}*/
 
 .buttonForm {
     color: dodgerblue;
@@ -127,4 +143,45 @@ NavLink:link {
 
 NavLink:visited {
     text-decoration: none;
+}
+
+.MuiPaper-rounded-255 {
+    background-color: cornflowerblue;
+}
+
+a {
+    color: dodgerblue;
+    background: transparent;
+}
+
+a.active {
+    color: dodgerblue;
+    background: transparent;
+}
+
+.MuiListItem-button-86:hover {
+
+}
+
+.MuiInputBase-input-188 {
+    color: dodgerblue;
+    -webkit-tap-highlight-color: dodgerblue;
+    -webkit-text-decoration-color: dodgerblue;
+}
+
+.MuiButtonBase-root-27 {
+    border-color: dodgerblue;
+}
+
+.MuiButton-outlinedPrimary-103 {
+    color: dodgerblue;
+    border: 1px solid dodgerblue;
+}
+
+.MuiInputBase-input-233 {
+    color: dodgerblue;
+}
+
+div {
+    display: block;
 }
